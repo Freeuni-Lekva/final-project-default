@@ -1,4 +1,7 @@
+drop database quiz;
+
 create database quiz;
+
 
 use quiz;
 
@@ -12,7 +15,9 @@ create table users(
 create table quizes(
 	Id serial primary key,
     Title varchar(200),
-    description varchar(1500)
+    description varchar(1500),
+    creator_id bigint unsigned,
+	foreign key (creator_id) references users(id)
 );
 
 create table questions(
@@ -21,6 +26,14 @@ create table questions(
     Question_type varchar(30),
     Question_Description varchar(2000),
     foreign key (quiz_id) references QUIZES(id)
+);
+
+create table answers(
+	Id serial primary key,
+    Question_id bigint unsigned,
+    answer_Description varchar(1000),
+    is_correct boolean,
+    foreign key (Question_id) references Questions(id)
 );
 
 create table history(
