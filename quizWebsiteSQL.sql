@@ -17,7 +17,8 @@ create table quizes(
     Title varchar(200),
     description varchar(1500),
     creator_id bigint unsigned,
-	foreign key (creator_id) references users(id)
+	foreign key (creator_id) references users(id),
+    quizTime bigint
 );
 
 create table questions(
