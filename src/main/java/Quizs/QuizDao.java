@@ -39,7 +39,7 @@ public class QuizDao implements IQuizDao{
         return quiz;
     }
 
-    public void addQuiz(String title, String description, int creatorId, int quizTime) throws SQLException {
+    public Quiz addQuiz(String title, String description, int creatorId, int quizTime) throws SQLException {
         PreparedStatement st = dbConn.getConnection().prepareStatement("INSERT INTO quizes (Title, description, creator_id, quizTime)" +
                 "VALUES (?, ?, ?, ?);");
         st.setString(1, title);
@@ -48,6 +48,16 @@ public class QuizDao implements IQuizDao{
         st.setInt(4, quizTime);
         st.executeUpdate();
         st.close();
+        return getQuiz(getLastInsertedQuizId());
+    }
+
+    private int getLastInsertedQuizId() throws SQLException {
+        Statement st = dbConn.getConnection().createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM QUIZES ORDER BY id DESC;");
+        if(!rs.next()) return -1;
+        int result = rs.getInt(1);
+        st.close();
+        return result;
     }
 
     public boolean removeQuiz(Quiz quiz) throws SQLException {

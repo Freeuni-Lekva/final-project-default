@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public interface IQuizDao {
     ArrayList<Quiz> getQuizzes() throws SQLException;
     Quiz getQuiz(int id) throws SQLException;
-    void addQuiz(String title, String description, int creatorId, int quizTime) throws SQLException;
+    Quiz addQuiz(String title, String description, int creatorId, int quizTime) throws SQLException;
     boolean removeQuiz(Quiz quiz) throws SQLException;
     boolean setQuizTitle(Quiz quiz, String title) throws SQLException;
     boolean setQuizTitle(int quizId, String title) throws SQLException;

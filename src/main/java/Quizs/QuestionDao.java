@@ -67,7 +67,7 @@ public class QuestionDao implements IQuestionDao{
         throw new RuntimeException("There is no class with such a type of a question");
     }
 
-    public void addQuestion(int quizId, String type, String description) throws SQLException {
+    public Question addQuestion(int quizId, String type, String description) throws SQLException {
         PreparedStatement st = dbConn.getConnection().prepareStatement("INSERT INTO questions (quiz_id, Question_type, Question_Description)" +
                 "VALUES (?, ?, ?);");
         st.setInt(1, quizId);
@@ -75,6 +75,16 @@ public class QuestionDao implements IQuestionDao{
         st.setString(3, description);
         st.executeUpdate();
         st.close();
+        return getQuestion(getLastInsertElement("questions"));
+    }
+
+    private int getLastInsertElement(String tableName) throws SQLException {
+        Statement st = dbConn.getConnection().createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM " + tableName + " ORDER BY id DESC;");
+        if(!rs.next()) return -1;
+        int result = rs.getInt(1);
+        st.close();
+        return result;
     }
 
     public boolean removeQuestion(Question question) throws SQLException {
@@ -147,11 +157,11 @@ public class QuestionDao implements IQuestionDao{
         return result;
     }
 
-    public void addAnswer(Question question, String description, boolean isCorrect) throws SQLException {
-        addAnswer(question.getId(), description, isCorrect);
+    public Answer addAnswer(Question question, String description, boolean isCorrect) throws SQLException {
+        return addAnswer(question.getId(), description, isCorrect);
     }
 
-    public void addAnswer(int questionId, String description, boolean isCorrect) throws SQLException {
+    public Answer addAnswer(int questionId, String description, boolean isCorrect) throws SQLException {
         PreparedStatement st = dbConn.getConnection().prepareStatement("INSERT INTO answers (Question_id, answer_Description, is_correct)" +
                 "VALUES (?, ?, ?);");
         st.setInt(1, questionId);
@@ -159,6 +169,7 @@ public class QuestionDao implements IQuestionDao{
         st.setBoolean(3, isCorrect);
         st.executeUpdate();
         st.close();
+        return getAnswer(getLastInsertElement("answers"));
     }
 
     public boolean removeAnswer(Answer answer) throws SQLException {
