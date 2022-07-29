@@ -63,8 +63,7 @@ public class QuestionDao implements IQuestionDao{
             case "FILL_QUESTION":
                 return new FillQuestion(id, quizId, description);
         }
-
-        throw new RuntimeException("There is no class with such a type of a question");
+        return null;
     }
 
     public Question addQuestion(int quizId, String type, String description) throws SQLException {
