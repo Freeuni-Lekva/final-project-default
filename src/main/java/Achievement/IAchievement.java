@@ -1,3 +1,5 @@
+package Achievement;
+
 public interface IAchievement {
 
     int getId();

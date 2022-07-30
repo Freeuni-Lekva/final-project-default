@@ -1,3 +1,5 @@
+package Achievement;
+
 import java.util.Date;
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,12 +14,13 @@ public class AchievementDAO implements IAchievementDAO {
     }
 
     @Override
-    public void createNewAchievement(String name, String description) throws SQLException {
+    public boolean createNewAchievement(String name, String description) throws SQLException {
         PreparedStatement stmt = connection.prepareStatement(
                 "INSERT INTO achievments (name, description) VALUES (?, ?)");
         stmt.setString(1, name);
         stmt.setString(2, description);
-        stmt.executeUpdate();
+        int change = stmt.executeUpdate();
+        return change > 0;
     }
 
     @Override
@@ -53,13 +56,14 @@ public class AchievementDAO implements IAchievementDAO {
         return result;
     }
 
-    public void giveUserAchievement(int user_id, Achievement achievement, Date acquiredDate) throws SQLException {
+    public boolean giveUserAchievement(int user_id, Achievement achievement, Date acquiredDate) throws SQLException {
         PreparedStatement stmt = connection.prepareStatement(
                     "INSERT INTO achievment_history (user_Id, achievment_Id, acquired_date) " +
                             "VALUES (?, ?, ?)");
         stmt.setInt(1, user_id);
         stmt.setInt(2, achievement.getId());
         stmt.setDate(3, new java.sql.Date(acquiredDate.getTime()));
-        stmt.executeUpdate();
+        int change = stmt.executeUpdate();
+        return change > 0;
     }
 }
