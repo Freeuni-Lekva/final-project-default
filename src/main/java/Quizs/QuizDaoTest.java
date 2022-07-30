@@ -13,7 +13,7 @@ public class QuizDaoTest extends TestCase {
 
         //Testing on empty quizzes table
         QuizDao qd = new QuizDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("pingvina", "salam");
         assertTrue(qd.getQuizzes().isEmpty());
 
@@ -29,7 +29,7 @@ public class QuizDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("xuso", "2");
         ud.addUser("koshka", "12");
         ud.addUser("hasan", "13");
@@ -59,7 +59,7 @@ public class QuizDaoTest extends TestCase {
         TestHelper.deleteAndCreateDatabase(dbConn);
 
         QuizDao qd = new QuizDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("kalduna", "");
         ud.addUser("sklinta", "");
         qd.addQuiz("vano", "gejadze", 1, 200);
@@ -97,7 +97,7 @@ public class QuizDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
 
         ud.addUser("zaxarichi", "amas ramdeniaq gavlili");
         qd.addQuiz("title", "description", 1, 200);
