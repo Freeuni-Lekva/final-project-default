@@ -20,6 +20,7 @@ public interface IQuestionDao {
     boolean removeQuestionAnswers(int questionId) throws SQLException;
     Answer getAnswer(int answerId) throws SQLException;
     boolean setAnswerDescription(Answer answer, String description) throws SQLException;
+    boolean setAnswerDescription(int answerId, String description) throws SQLException;
     boolean setAnswerCorrectness(Answer answer, boolean isCorrect) throws SQLException;
     boolean setAnswerCorrectness(int answerId, boolean isCorrect) throws SQLException;
     boolean updateAnswer(Answer answer) throws SQLException;
