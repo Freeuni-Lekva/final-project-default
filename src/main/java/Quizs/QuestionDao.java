@@ -30,6 +30,29 @@ public class QuestionDao implements IQuestionDao{
         return result;
     }
 
+    public ArrayList<Question> getQuestions(Quiz quiz) throws SQLException{
+        return getQuestions(quiz.getId());
+    }
+
+    public ArrayList<Question> getQuestions(int quizId) throws SQLException{
+        ArrayList<Question> result = new ArrayList<>();
+
+        PreparedStatement st = dbConn.getConnection().prepareStatement("SELECT * FROM questions WHERE quiz_id = ?;");
+        st.setInt(1, quizId);
+        ResultSet rs = st.executeQuery();
+
+        while(rs.next()){
+            int id = rs.getInt(1);
+            String description = rs.getString(4);
+            String questionType = rs.getString(3);
+            questionGetter(result, id, quizId, description, questionType);
+        }
+
+        st.close();
+
+        return result;
+    }
+
     static void questionGetter(ArrayList<Question> result, int id, int quizId, String description, String questionType) {
         if(questionType.equals("QUESTION_RESPONSE")){
             result.add(new QuestionResponse(id, quizId, description));
@@ -53,17 +76,18 @@ public class QuestionDao implements IQuestionDao{
         String description = rs.getString(4);
         String questionType = rs.getString(3);
         st.close();
+        Question result = null;
         switch (questionType) {
             case "QUESTION_RESPONSE":
-                return new QuestionResponse(id, quizId, description);
+                result =  new QuestionResponse(id, quizId, description);
             case "MULTIPLE_CHOICE":
-                return new MultipleChoiceQuestion(id, quizId, description);
+                result =  new MultipleChoiceQuestion(id, quizId, description);
             case "PICTURE_RESPONSE":
-                return new PictureResponseQuestion(id, quizId, description);
+                result =  new PictureResponseQuestion(id, quizId, description);
             case "FILL_QUESTION":
-                return new FillQuestion(id, quizId, description);
+                result =  new FillQuestion(id, quizId, description);
         }
-        return null;
+        return result;
     }
 
     public Question addQuestion(int quizId, String type, String description) throws SQLException {

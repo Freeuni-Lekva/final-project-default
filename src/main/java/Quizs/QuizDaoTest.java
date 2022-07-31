@@ -5,7 +5,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class QuizDaoTest extends TestCase {
-    
+
     public void test1() throws SQLException, ClassNotFoundException {
         //Tests for simple cases
         DatabaseConnection dbConn = new DatabaseConnection();
@@ -34,7 +34,9 @@ public class QuizDaoTest extends TestCase {
         ud.addUser("koshka", "12");
         ud.addUser("hasan", "13");
 
+        int count = 1;
         for(int i = 0; i < 15; i++){
+            if(i % 3 == 0 && i != 0) count++;
             char title = (char)('a' + i);
             qd.addQuiz("" + title, "", (i % 3) + 1, 250);
             assertEquals(i + 1, qd.getQuizzes().size());
@@ -42,6 +44,23 @@ public class QuizDaoTest extends TestCase {
                     equals("") && qd.getQuiz(i + 1).getQuizTime() == 250 && qd.getQuiz(i + 1).getCreatorId() == (i % 3) + 1);
             qdd.addQuestion(i + 1, "FILL_QUESTION", "sadaa kaci patroni a?");
             qdd.addAnswer(i + 1, "me ravi", false);
+            assertEquals(count, qd.getQuizzes(ud.getUser((i % 3) + 1)).size());
+        }
+
+        //Testing getRecentQuizzes
+        ArrayList<Quiz> recentQuizzes = qd.getRecentQuizzes(10);
+        for(int i = 0; i < recentQuizzes.size(); i++){
+            Quiz quiz = recentQuizzes.get(i);
+            assertEquals(15 - i, quiz.getId());
+        }
+
+        //Testing getRecentQuizzes on specific user
+        ArrayList<Quiz> recentUserQuizzes = qd.getRecentQuizzes(ud.getUser(2), 5);
+        int firstId = 14;
+        for(int i = 0; i < recentUserQuizzes.size(); i++){
+            Quiz quiz = recentUserQuizzes.get(i);
+            assertEquals(firstId, quiz.getId());
+            firstId -= 3;
         }
 
         //removeQuiz test

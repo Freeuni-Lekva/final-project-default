@@ -1,3 +1,5 @@
+import Users.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +18,66 @@ public class QuizDao implements IQuizDao{
 
         Statement st = dbConn.getConnection().createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM quizes;");
+
+        while(rs.next()){
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            result.add(quiz);
+        }
+
+        st.close();
+
+        return result;
+    }
+
+    public ArrayList<Quiz> getQuizzes(User user) throws SQLException{
+        return getQuizzes(user.getId());
+    }
+
+    public ArrayList<Quiz> getQuizzes(int userId) throws SQLException {
+        ArrayList<Quiz> result = new ArrayList<>();
+
+        PreparedStatement st = dbConn.getConnection().prepareStatement("SELECT * FROM quizes WHERE creator_id = ?;");
+        st.setInt(1, userId);
+        ResultSet rs = st.executeQuery();
+
+        while(rs.next()){
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            result.add(quiz);
+        }
+
+        st.close();
+
+        return result;
+    }
+
+    public ArrayList<Quiz> getRecentQuizzes(int limit) throws SQLException {
+        ArrayList<Quiz> result = new ArrayList<>();
+
+        PreparedStatement st = dbConn.getConnection().prepareStatement("SELECT * FROM quizes ORDER BY Id DESC LIMIT ?;");
+        st.setInt(1, limit);
+        ResultSet rs = st.executeQuery();
+
+        while(rs.next()){
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            result.add(quiz);
+        }
+
+        st.close();
+
+        return result;
+    }
+
+    public ArrayList<Quiz> getRecentQuizzes(User user, int limit) throws SQLException {
+        return getRecentQuizzes(user.getId(), limit);
+    }
+
+    public ArrayList<Quiz> getRecentQuizzes(int userId, int limit) throws SQLException {
+        ArrayList<Quiz> result = new ArrayList<>();
+
+        PreparedStatement st = dbConn.getConnection().prepareStatement("SELECT * FROM quizes WHERE creator_id = ? ORDER BY Id DESC LIMIT ?;");
+        st.setInt(1, userId);
+        st.setInt(2, limit);
+        ResultSet rs = st.executeQuery();
 
         while(rs.next()){
             Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
