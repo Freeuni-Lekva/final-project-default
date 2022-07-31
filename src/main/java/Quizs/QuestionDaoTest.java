@@ -14,7 +14,7 @@ public class QuestionDaoTest extends TestCase {
         assertTrue(qdd.getQuestions().isEmpty());
 
         QuizDao qd = new QuizDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("walter", "skyler");
         qd.addQuiz("jesse", "pinkman", 1, 200);
         qdd.addQuestion(1, "FILL_QUESTION", "description");
@@ -30,7 +30,7 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
 
         ud.addUser("user", "password");
         qd.addQuiz("title", "description", 1, 100);
@@ -56,7 +56,7 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
 
         ud.addUser("user", "password");
         qd.addQuiz("title", "description", 1, 100);
@@ -76,7 +76,7 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("user", "password");
         qd.addQuiz("title", "description", 1, 100);
         qd.addQuiz("TITLE", "DESCRIPTION", 1, 100);
@@ -109,7 +109,7 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("user", "password");
         qd.addQuiz("title", "description", 1, 100);
         qdd.addQuestion(1, "QUESTION_RESPONSE", "desc");
@@ -129,7 +129,7 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("user", "password");
         qd.addQuiz("title", "description", 1, 100);
         qdd.addQuestion(1, "QUESTION_RESPONSE", "desc");
