@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public interface IQuestionDao {
     ArrayList<Question> getQuestions() throws SQLException;
+    ArrayList<Question> getQuestions(Quiz quiz) throws SQLException;
+    ArrayList<Question> getQuestions(int quizId) throws SQLException;
     Question getQuestion(int id) throws SQLException;
     Question addQuestion(int quizId, String type, String description) throws SQLException;
     boolean removeQuestion(Question question) throws SQLException;

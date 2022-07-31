@@ -1,8 +1,15 @@
+import Users.User;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface IQuizDao {
     ArrayList<Quiz> getQuizzes() throws SQLException;
+    ArrayList<Quiz> getQuizzes(User user) throws SQLException;
+    ArrayList<Quiz> getQuizzes(int userId) throws SQLException;
+    ArrayList<Quiz> getRecentQuizzes(int limit) throws SQLException;
+    ArrayList<Quiz> getRecentQuizzes(User user, int limit) throws SQLException;
+    ArrayList<Quiz> getRecentQuizzes(int userId, int limit) throws SQLException;
     Quiz getQuiz(int id) throws SQLException;
     Quiz addQuiz(String title, String description, int creatorId, int quizTime) throws SQLException;
     boolean removeQuiz(Quiz quiz) throws SQLException;
