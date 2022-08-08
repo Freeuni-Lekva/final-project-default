@@ -32,6 +32,23 @@ public class MailDao implements  IMailDao{
         statement.executeUpdate();
     }
 
+    public void deleteMail(int id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM mails WHERE id = ?");
+        statement.setInt(1, id);
+        statement.execute();
+    }
+
+
+/*
+    public void deleteMail(int from_id,int to_id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("DELETE FROM mails WHERE from_Id = ? AND to_Id=?");
+        statement.setInt(1, from_id);
+        statement.setInt(2, to_id);
+        statement.execute();
+    }
+
+*/
+
     private Mail mailParser(ResultSet res) throws SQLException {
        // connection.createStatement().executeUpdate("USE quiz");
         int id = res.getInt(1);
