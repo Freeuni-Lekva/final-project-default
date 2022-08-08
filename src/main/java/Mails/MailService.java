@@ -19,7 +19,9 @@ public class MailService {
          md.addMail(fromId,toId,type,title,content,date);
     }
 
-
+    public void deleteMail(int id) throws SQLException {
+        md.deleteMail(id);
+    }
 
     public Mail getMail(int id) throws SQLException {
         return md.getMail(id);
