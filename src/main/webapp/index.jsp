@@ -8,6 +8,7 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="QuizCreation.jsp">Create Quiz</a>
+<a href="AddQuestions.jsp">Add Questions</a>
 </body>
 </html>
