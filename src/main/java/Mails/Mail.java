@@ -1,7 +1,7 @@
 package Mails;
 import java.util.Date;
 
-abstract class Mail {
+public abstract class Mail {
 
     private int mailId;
     private int fromId;
