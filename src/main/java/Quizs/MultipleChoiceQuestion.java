@@ -1,4 +1,4 @@
-
+package Quizs;
 public class MultipleChoiceQuestion extends Question{
 
     public MultipleChoiceQuestion(int id, int quizId, String description){

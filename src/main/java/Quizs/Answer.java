@@ -1,3 +1,4 @@
+package Quizs;
 import java.util.Objects;
 
 public class Answer {

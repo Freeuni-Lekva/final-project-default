@@ -1,4 +1,4 @@
-
+package Quizs;
 public class QuestionResponse extends Question {
    public QuestionResponse(int id, int quizId, String description){
        super(id, quizId, description);
