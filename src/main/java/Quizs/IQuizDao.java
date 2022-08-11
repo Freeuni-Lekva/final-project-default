@@ -1,4 +1,3 @@
-package Quizs;
 import Users.User;
 
 import java.sql.SQLException;
@@ -20,6 +19,14 @@ public interface IQuizDao {
     boolean setQuizDescription(int quizId, String description) throws SQLException;
     boolean setQuizTime(Quiz quiz, int quizTime) throws SQLException;
     boolean setQuizTime(int quizId, int quizTime) throws SQLException;
+    boolean setQuizRandomness(Quiz quiz, boolean isRandom) throws SQLException;
+    boolean setQuizRandomness(int quizId, boolean isRandom) throws SQLException;
+    boolean setQuizToOnePage(Quiz quiz, boolean isOnePage) throws SQLException;
+    boolean setQuizToOnePage(int quizId, boolean isOnePage) throws SQLException;
+    boolean setQuizImmediateCorrection(Quiz quiz, boolean isImmediateCorrection) throws SQLException;
+    boolean setQuizImmediateCorrection(int quizId, boolean isImmediateCorrection) throws SQLException;
+    boolean setQuizCanBePracticed(Quiz quiz, boolean canBePracticed) throws SQLException;
+    boolean setQuizCanBePracticed(int quizId, boolean canBePracticed) throws SQLException;
     boolean updateQuiz(Quiz quiz) throws SQLException;
     ArrayList<Question> getQuestions(Quiz quiz) throws SQLException;
     ArrayList<Question> getQuestions(int quizId) throws SQLException;

@@ -14,9 +14,9 @@ public class QuestionDaoTest extends TestCase {
         assertTrue(qdd.getQuestions().isEmpty());
 
         QuizDao qd = new QuizDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
         ud.addUser("walter", "skyler");
-        qd.addQuiz("jesse", "pinkman", 1, 200);
+        qd.addQuiz("jesse", "pinkman", 1, 200, true, false, false, true);
         qdd.addQuestion(1, "FILL_QUESTION", "description");
         assertTrue(qdd.getQuestion(1).getDescription().equals("description") && qdd.getQuestion(1).getType().
                 equals("FILL_QUESTION") && qdd.getQuestion(1).getQuizId() == 1);
@@ -30,10 +30,10 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
 
         ud.addUser("user", "password");
-        qd.addQuiz("title", "description", 1, 100);
+        qd.addQuiz("title", "description", 1, 100, true, false, false, true);
         qdd.addQuestion(1, "QUESTION_RESPONSE", "desc");
         qdd.addQuestion(1, "MULTIPLE_CHOICE", "desc");
         qdd.addQuestion(1, "PICTURE_RESPONSE", "desc");
@@ -56,10 +56,10 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
 
         ud.addUser("user", "password");
-        qd.addQuiz("title", "description", 1, 100);
+        qd.addQuiz("title", "description", 1, 100, true, false, false, true);
         qdd.addQuestion(1, "QUESTION_RESPONSE", "desc");
         assertEquals("desc", qdd.getQuestion(1).getDescription());
         qdd.setQuestionDescription(qdd.getQuestion(1), "description");
@@ -76,11 +76,11 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
         ud.addUser("user", "password");
-        qd.addQuiz("title", "description", 1, 100);
-        qd.addQuiz("TITLE", "DESCRIPTION", 1, 100);
-        qd.addQuiz("TITle", "DESCription", 1, 100);
+        qd.addQuiz("title", "description", 1, 100, true, false, false, true);
+        qd.addQuiz("TITLE", "DESCRIPTION", 1, 100, true, false, false, true);
+        qd.addQuiz("TITle", "DESCription", 1, 100, true, false, false, true);
 
         int count = 1;
         for(int i = 0; i < 15; i++){
@@ -109,9 +109,9 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
         ud.addUser("user", "password");
-        qd.addQuiz("title", "description", 1, 100);
+        qd.addQuiz("title", "description", 1, 100, true, false, false, true);
         qdd.addQuestion(1, "QUESTION_RESPONSE", "desc");
 
         for(int i = 0; i < 15; i++){
@@ -129,9 +129,9 @@ public class QuestionDaoTest extends TestCase {
 
         QuizDao qd = new QuizDao();
         QuestionDao qdd = new QuestionDao();
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
+        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
         ud.addUser("user", "password");
-        qd.addQuiz("title", "description", 1, 100);
+        qd.addQuiz("title", "description", 1, 100, true, false, false, true);
         qdd.addQuestion(1, "QUESTION_RESPONSE", "desc");
 
         //testing setter methods
