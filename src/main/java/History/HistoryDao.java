@@ -13,7 +13,7 @@ public class HistoryDao implements IHistoryDao{
     @Override
     public ArrayList <History> getUsersFromHistory(int quiz_id) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from history where quiz_id = " + quiz_id + " order by score desc limit 50");
+        ResultSet resultSet = statement.executeQuery("select * from history where quiz_id = " + quiz_id + " order by score desc , (end_time-start_time) asc limit 50");
         ArrayList <History> arr = getHistoryObjects(resultSet);
         statement.close();
         return arr;
@@ -22,7 +22,7 @@ public class HistoryDao implements IHistoryDao{
     @Override
     public ArrayList <History> getQuizzesFromHistory(int user_id) throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from history where user_id = " + user_id + " order by score desc limit 50");
+        ResultSet resultSet = statement.executeQuery("select * from history where user_id = " + user_id + " order by score desc , (end_time-start_time) asc limit 50");
         ArrayList <History> arr = getHistoryObjects(resultSet);
         statement.close();
         return arr;
@@ -32,7 +32,7 @@ public class HistoryDao implements IHistoryDao{
     public ArrayList <History> getScore(int quiz_id, int user_id) throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from history where user_id = " + user_id +
-                " and quiz_id = " + quiz_id + " order by score desc limit 50");
+                " and quiz_id = " + quiz_id + " order by score desc , (end_time-start_time) asc limit 50");
         ArrayList <History> arr = getHistoryObjects(resultSet);
         statement.close();
         return arr;
@@ -41,7 +41,7 @@ public class HistoryDao implements IHistoryDao{
     @Override
     public ArrayList<History> getAllHistory() throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from history order by score desc limit 50"); // limit 50
+        ResultSet resultSet = statement.executeQuery("select * from history order by score desc , (end_time-start_time) asc limit 50"); // limit 50
         ArrayList <History> arr = getHistoryObjects(resultSet);
         statement.close();
         return arr;
