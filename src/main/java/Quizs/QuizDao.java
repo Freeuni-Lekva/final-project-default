@@ -1,3 +1,4 @@
+package Quizs;
 import Users.User;
 
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public class QuizDao implements IQuizDao{
         ResultSet rs = st.executeQuery("SELECT * FROM quizes;");
 
         while(rs.next()){
-            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),rs.getBoolean(6),rs.getBoolean(7),rs.getBoolean(8),rs.getBoolean(9));
             result.add(quiz);
         }
 
@@ -41,7 +42,7 @@ public class QuizDao implements IQuizDao{
         ResultSet rs = st.executeQuery();
 
         while(rs.next()){
-            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),rs.getBoolean(6),rs.getBoolean(7),rs.getBoolean(8),rs.getBoolean(9));
             result.add(quiz);
         }
 
@@ -58,7 +59,7 @@ public class QuizDao implements IQuizDao{
         ResultSet rs = st.executeQuery();
 
         while(rs.next()){
-            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),rs.getBoolean(6),rs.getBoolean(7),rs.getBoolean(8),rs.getBoolean(9));
             result.add(quiz);
         }
 
@@ -80,7 +81,7 @@ public class QuizDao implements IQuizDao{
         ResultSet rs = st.executeQuery();
 
         while(rs.next()){
-            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),rs.getBoolean(6),rs.getBoolean(7),rs.getBoolean(8),rs.getBoolean(9));
             result.add(quiz);
         }
 
@@ -96,18 +97,22 @@ public class QuizDao implements IQuizDao{
 
         if(!rs.next()) return null;
 
-        Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5));
+        Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),rs.getBoolean(6),rs.getBoolean(7),rs.getBoolean(8),rs.getBoolean(9));
         st.close();
         return quiz;
     }
 
-    public Quiz addQuiz(String title, String description, int creatorId, int quizTime) throws SQLException {
-        PreparedStatement st = dbConn.getConnection().prepareStatement("INSERT INTO quizes (Title, description, creator_id, quizTime)" +
-                "VALUES (?, ?, ?, ?);");
+    public Quiz addQuiz(String title, String description, int creatorId, int quizTime,boolean isRandom,boolean isOnePage,boolean immediateCorrection,boolean canBePracticed) throws SQLException {
+        PreparedStatement st = dbConn.getConnection().prepareStatement("INSERT INTO quizes (Title, description, creator_id, quizTime,isRandom,isOnePage,immediateCorrection,canBePracticed )" +
+                "VALUES (?, ?, ?, ?,?,?,?,?);");
         st.setString(1, title);
         st.setString(2, description);
         st.setInt(3, creatorId);
         st.setInt(4, quizTime);
+        st.setBoolean(5,isRandom);
+        st.setBoolean(6,isOnePage);
+        st.setBoolean(7,immediateCorrection);
+        st.setBoolean(8,canBePracticed);
         st.executeUpdate();
         st.close();
         return getQuiz(getLastInsertedQuizId());
@@ -194,11 +199,16 @@ public class QuizDao implements IQuizDao{
     }
 
     public boolean updateQuiz(Quiz quiz) throws SQLException {
-        PreparedStatement st = dbConn.getConnection().prepareStatement("UPDATE quizes SET quizTime = ?, description = ?, Title = ? WHERE Id = ?;");
+        PreparedStatement st = dbConn.getConnection().prepareStatement("UPDATE quizes SET quizTime = ?, description = ?, Title = ?,isRandom=?,isOnePage=?,ImmediateCorrection=?,CanBePracticed=? WHERE Id = ?;");
         st.setInt(1, quiz.getQuizTime());
         st.setString(2, quiz.getDescription());
         st.setString(3, quiz.getTitle());
-        st.setInt(4, quiz.getId());
+        st.setBoolean(4, quiz.isRandom());
+        st.setBoolean(5, quiz.isOnePage());
+        st.setBoolean(6, quiz.isImmediateCorrection());
+        st.setBoolean(7, quiz.isCanBePracticed());
+
+        st.setInt(8, quiz.getId());
         int diff = st.executeUpdate();
         st.close();
 

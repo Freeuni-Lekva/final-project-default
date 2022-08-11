@@ -1,4 +1,4 @@
-
+package Quizs;
 public class PictureResponseQuestion extends Question{
 
     public PictureResponseQuestion(int id, int quizId, String description){
