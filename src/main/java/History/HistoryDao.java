@@ -47,6 +47,19 @@ public class HistoryDao implements IHistoryDao{
         return arr;
     }
 
+    public HistorySummary getHistorySummary(int quiz_id) throws SQLException{
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select avg(score), avg(timestampdiff(minute,start_time,end_time)) from history");
+        statement.close();
+        return new HistorySummary(resultSet.getInt(1), resultSet.getDouble(2));
+    }
+    public ArrayList <History> getRecentTestTakers(int quiz_id) throws SQLException{
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from history where quiz_id = " + quiz_id + " order by end_time desc limit 5");
+        ArrayList <History> arr = getHistoryObjects(resultSet);
+        statement.close();
+        return arr;
+    }
     public void addHistoryEntry(History history) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("insert into history(user_id,quiz_id,score,start_time,end_time) values (?,?,?,?,?)");
         preparedStatement.setInt(1,history.getUser_id());
@@ -57,6 +70,7 @@ public class HistoryDao implements IHistoryDao{
         preparedStatement.execute();
         preparedStatement.close();
     }
+
     private ArrayList <History> getHistoryObjects(ResultSet resultSet) throws SQLException {
         ArrayList <History> arr = new ArrayList<History>();
         while (resultSet.next())
