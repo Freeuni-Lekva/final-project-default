@@ -2,6 +2,7 @@ package ShowQuizServlets;
 
 import Quizs.IQuestionDao;
 import Quizs.IQuizDao;
+import Quizs.Question;
 import Quizs.Quiz;
 import Users.User;
 
@@ -10,6 +11,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 @WebServlet(name = "ShowQuizServlet", value = "/ShowQuizServlet")
 public class ShowQuizServlet extends HttpServlet {
@@ -30,6 +33,31 @@ public class ShowQuizServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
+        if (currentQuiz.isOnePage())
+        {
+            request.getRequestDispatcher("SinglePage.jsp").forward(request,response);
+
+        }
+        else
+        {
+            ArrayList<Question>curquests;
+            try {
+              curquests=quizDao.getQuestions(currentQuiz);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if (currentQuiz.isRandom())
+                Collections.shuffle(curquests);
+            request.setAttribute("QuestionsList",curquests);
+
+
+        }
+
+
+
+
         
     }
 }
