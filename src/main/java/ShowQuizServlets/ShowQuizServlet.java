@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 @WebServlet(name = "ShowQuizServlet", value = "/ShowQuizServlet")
 public class ShowQuizServlet extends HttpServlet {
@@ -34,11 +35,11 @@ public class ShowQuizServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-
+        Date st_time = new Date(System.currentTimeMillis());
+        request.setAttribute("st_time",st_time);
         if (currentQuiz.isOnePage())
         {
             request.getRequestDispatcher("SinglePage.jsp").forward(request,response);
-
         }
         else
         {
@@ -51,13 +52,9 @@ public class ShowQuizServlet extends HttpServlet {
             if (currentQuiz.isRandom())
                 Collections.shuffle(curquests);
             request.setAttribute("QuestionsList",curquests);
-
-
+            request.setAttribute("CurrentQuestion",0);
+            Question firstQuestion = curquests.get(0);
+            request.getRequestDispatcher("Show" + firstQuestion.getType() + ".jsp").forward(request,response);
         }
-
-
-
-
-        
     }
 }
