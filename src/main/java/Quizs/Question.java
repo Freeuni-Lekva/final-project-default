@@ -42,5 +42,8 @@ public abstract class Question {
     }
 
     abstract String getTag();
-    abstract String getType();
+    public abstract String getType();
+
+
+
 }
