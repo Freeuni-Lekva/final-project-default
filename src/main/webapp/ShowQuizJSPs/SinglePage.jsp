@@ -26,8 +26,6 @@
 </head>
 
 
-
-
 <body>
 <form action = "CheckAnswers" method="post">
     <%
@@ -45,7 +43,7 @@
             if (s.equals("QUESTION_RESPONSE") || s.equals("FILL_QUESTION"))
             {
                 out.println("<p>"+curquest.getDescription()+"</p>");
-                out.println("<input type=\"text\" name=\"question" + i+1 + "\"" + ">");
+                out.println("<input type=\"text\" name=\"question" + i + "\"" + ">");
             }
 
             if (s.equals("MULTIPLE_CHOICE"))
@@ -60,7 +58,7 @@
                 for (int k=0;k<ans.size();k++)
                 {
                     String answer = ans.get(k).getDescription();
-                    out.println("<input type=\"radio\" name=\"question" + i+1 + "\" " + "value=" +
+                    out.println("<input type=\"radio\" name=\"question" + i + "\" " + "value=" +
                             answer + "\" " + "> " + answer + "</br>");
                 }
             }
@@ -68,7 +66,7 @@
             {
 
                 out.println("<p>"+"<img src=\""+curquest.getDescription() + "\"" + "alt=\"" + curquest.getDescription() + "\"" +">"+"</p>");
-                out.println("<input type=\"text\" name=\"question" + i+1 + "\"" + ">");
+                out.println("<input type=\"text\" name=\"question" + i + "\"" + ">");
 
             }
 
