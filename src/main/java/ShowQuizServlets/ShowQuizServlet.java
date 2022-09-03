@@ -53,6 +53,7 @@ public class ShowQuizServlet extends HttpServlet {
         {
             if (currentQuiz.isRandom())
                 Collections.shuffle(curquests);
+            request.setAttribute("feedback",Boolean.FALSE);
             request.setAttribute("QuestionsList",curquests);
             request.setAttribute("CurrentQuestion",0);
             Question firstQuestion = curquests.get(0);

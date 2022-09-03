@@ -24,11 +24,27 @@ public class MultiPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<Question> questions = (ArrayList<Question>) request.getAttribute("QuestionsList");
         Integer curID = (Integer)request.getAttribute("CurrentQuestion");
-        curID++;
-        if (curID == questions.size())
+        IQuizDao quizDao = (IQuizDao) request.getServletContext().getAttribute("QuizDao");
+        int quiz_id = Integer.parseInt(request.getParameter("quiz_id"));
+        Quiz currentQuiz;
+        try {
+            currentQuiz = quizDao.getQuiz(quiz_id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (currentQuiz.isImmediateCorrection())
+        {
+            if (!(Boolean) request.getAttribute("feedback"))
+            {
+                request.getRequestDispatcher("ImmediateFeedback.jsp").forward(request,response);
+            }
+        }
+
+        if (curID+1 == questions.size())
         {
             request.getRequestDispatcher("CheckAnswers").forward(request,response);
         }
+        curID++;
         request.setAttribute("CurrentQuestion",curID);
         Question firstQuestion = questions.get(curID);
         request.getRequestDispatcher("Show" + firstQuestion.getType() + ".jsp").forward(request,response);
