@@ -116,6 +116,8 @@
         <h3>isOnePage : <%=q.isOnePage()%></h3>
         <h3>immediateCorrection : <%=q.isImmediateCorrection()%></h3>
         <h3>canBePracticed : <%=q.isCanBePracticed()%></h3>
+
+
         <p> Top scorers on this quiz:
             <%
                 for (int k = 0; k < ar.size(); k++)
@@ -163,6 +165,16 @@
 
 
         <input name="quiz_id" type="hidden" value="<%=q.getId()%>"/>
+        <%if (q.isCanBePracticed())
+
+            out.println("<input type=\"radio\" name=\"IsPracticed"  + "\" " + "value=" +
+                    "YES" + "\" " + "> " + "YES" + "</br>");
+            out.println("<input type=\"radio\" name=\"IsPracticed"  + "\" " + "value=" +
+                    "NO" + "\" " + "> " + "NO" + "</br>");
+
+        %>
+
+
         <input type = "submit" id = "startQuizButton" name = "Start Quiz">
     </form>
 </body>
