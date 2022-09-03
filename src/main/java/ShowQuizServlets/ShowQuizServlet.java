@@ -19,7 +19,6 @@ import java.util.Date;
 public class ShowQuizServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 
     @Override
@@ -35,20 +34,23 @@ public class ShowQuizServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        Date st_time = new Date(System.currentTimeMillis());
+        java.sql.Date st_time = new java.sql.Date(System.currentTimeMillis());
         request.setAttribute("st_time",st_time);
+
+        ArrayList<Question>curquests;
+        try {
+            curquests=quizDao.getQuestions(currentQuiz);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         if (currentQuiz.isOnePage())
         {
+            request.setAttribute("QuestionsList",curquests);
             request.getRequestDispatcher("SinglePage.jsp").forward(request,response);
         }
         else
         {
-            ArrayList<Question>curquests;
-            try {
-              curquests=quizDao.getQuestions(currentQuiz);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
             if (currentQuiz.isRandom())
                 Collections.shuffle(curquests);
             request.setAttribute("QuestionsList",curquests);
