@@ -27,7 +27,7 @@
 
 
 <body>
-<form action = "CheckAnswers" method="post">
+<form action = "SinglePageCheckAnswersForwarder" method="post">
     <%
         ArrayList<Question> questions;
         try {
@@ -59,7 +59,7 @@
                 {
                     String answer = ans.get(k).getDescription();
                     out.println("<input type=\"radio\" name=\"question" + i + "\" " + "value=" +
-                            answer + "\" " + "> " + answer + "</br>");
+                            answer  + "> " + answer + "</br>");
                 }
             }
             if (s.equals("PICTURE_RESPONSE"))

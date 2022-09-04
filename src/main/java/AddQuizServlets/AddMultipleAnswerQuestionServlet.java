@@ -1,4 +1,4 @@
-
+package AddQuizServlets;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -6,6 +6,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import Quizs.*;
+
 
 @WebServlet(name = "AddMultipleAnswerQuestionServlet", value = "/AddMultipleAnswerQuestionServlet")
 public class AddMultipleAnswerQuestionServlet extends HttpServlet {
@@ -19,7 +21,7 @@ public class AddMultipleAnswerQuestionServlet extends HttpServlet {
         IQuestionDao questionDao = (IQuestionDao) request.getServletContext().getAttribute("QuestionDao");
         String question = request.getParameter("questionDescription");
         try {
-            Question newQuest = questionDao.addQuestion(10 , "MULTIPLE_CHOICE" , question);
+            Question newQuest = questionDao.addQuestion( 9, "MULTIPLE_CHOICE" , question);
             for(int index = 1 ; index < 5 ; index++){
                 String answer = request.getParameter("answer" + index);
                 boolean correct = request.getParameter("correctAnswer").equals("" + index);
@@ -28,6 +30,6 @@ public class AddMultipleAnswerQuestionServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        request.getRequestDispatcher("AddQuestions.jsp").forward(request, response);
+        request.getRequestDispatcher("/AddQuizJSPs/AddQuestions.jsp").forward(request, response);
     }
 }

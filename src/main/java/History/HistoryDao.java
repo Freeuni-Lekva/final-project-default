@@ -7,7 +7,8 @@ public class HistoryDao implements IHistoryDao{
     private Connection connection;
 
     public HistoryDao(String base, String user, String password) throws SQLException {
-        connection = DriverManager.getConnection(base,user,password);
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz",user,password);
+
     }
 
     @Override
@@ -50,8 +51,10 @@ public class HistoryDao implements IHistoryDao{
     public HistorySummary getHistorySummary(int quiz_id) throws SQLException{
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select avg(score), avg(timestampdiff(minute,start_time,end_time)) from history");
+        resultSet.next();
+        HistorySummary res =  new HistorySummary(resultSet.getInt(1), resultSet.getDouble(2));
         statement.close();
-        return new HistorySummary(resultSet.getInt(1), resultSet.getDouble(2));
+        return res;
     }
     public ArrayList <History> getRecentTestTakers(int quiz_id) throws SQLException{
         Statement statement = connection.createStatement();

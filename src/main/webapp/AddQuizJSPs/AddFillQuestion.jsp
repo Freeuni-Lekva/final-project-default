@@ -11,7 +11,7 @@
     <title>Add Multiple Choice Question</title>
 </head>
 <body>
-    <form action="AddFillQuestionServlet" id = "addFillQuestion" method="post">
+    <form action="../AddFillQuestionServlet" id = "addFillQuestion" method="post">
         <h4>Please, Write Question. Type "[blank]" For Unfilled Words.</h4>
         <h10>Example: "The First President Of USA Was [blank]"</h10><br>
         <textarea form="addFillQuestion" maxlength="500" id="questionDescription" name="questionDescription" cols="15"></textarea>
@@ -19,7 +19,7 @@
         <textarea form="addFillQuestion" maxlength="500" id="answer" name="answer" cols="15"></textarea><br>
         <input form ="addFillQuestion" type="submit" id = "addQuestionButton" name = "addQuestionButton" value="Add">
     </form>
-    <form action="AddQuestions.jsp" id = "BackForm" method = "get">
+    <form action="./AddQuestions.jsp" id = "BackForm" method = "get">
         <input type="submit" id = "BackButt" name = "BackButt" value="Back">
     </form>
 

@@ -1,4 +1,4 @@
-import com.mysql.cj.util.StringUtils;
+package AddQuizServlets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import Quizs.*;
 
 @WebServlet(name = "AddFillQuestionServlet", value = "/AddFillQuestionServlet")
 public class AddFillQuestionServlet extends HttpServlet {
@@ -27,7 +28,7 @@ public class AddFillQuestionServlet extends HttpServlet {
         String[] answers = answersText.split(",");
         List<String> trimmedAnswers = Arrays.stream(answers).map(String::trim).collect(Collectors.toList());
         try {
-            Question newQuest = questionDao.addQuestion(10 , "FILL_QUESTION" , question);
+            Question newQuest = questionDao.addQuestion(9 , "FILL_QUESTION" , question);
             trimmedAnswers.forEach(x -> {
                 try {
                     questionDao.addAnswer(newQuest , x , true);
@@ -38,6 +39,6 @@ public class AddFillQuestionServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        request.getRequestDispatcher("AddQuestions.jsp").forward(request, response);
+        request.getRequestDispatcher("/AddQuizJSPs/AddQuestions.jsp").forward(request, response);
     }
 }

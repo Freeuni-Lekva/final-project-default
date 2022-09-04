@@ -35,7 +35,7 @@ public class ShowQuizServlet extends HttpServlet {
         }
 
         java.sql.Date st_time = new java.sql.Date(System.currentTimeMillis());
-        request.setAttribute("st_time",st_time);
+        request.getSession().setAttribute("st_time",st_time);
 
         ArrayList<Question>curquests;
         try {
@@ -46,17 +46,18 @@ public class ShowQuizServlet extends HttpServlet {
 
         if (currentQuiz.isOnePage())
         {
-            request.setAttribute("QuestionsList",curquests);
-            request.getRequestDispatcher("SinglePage.jsp").forward(request,response);
+            request.getSession().setAttribute("QuestionsList",curquests);
+            request.getRequestDispatcher("/ShowQuizJSPs/SinglePage.jsp").forward(request,response);
         }
         else
         {
             if (currentQuiz.isRandom())
                 Collections.shuffle(curquests);
-            request.setAttribute("QuestionsList",curquests);
-            request.setAttribute("CurrentQuestion",0);
+            request.getSession().setAttribute("QuestionsList",curquests);
+            request.getSession().setAttribute("feedback",Boolean.FALSE);
+            request.getSession().setAttribute("CurrentQuestion",0);
             Question firstQuestion = curquests.get(0);
-            request.getRequestDispatcher("Show" + firstQuestion.getType() + ".jsp").forward(request,response);
+            request.getRequestDispatcher("/ShowQuizJSPs/Show" + firstQuestion.getType() + ".jsp").forward(request,response);
         }
     }
 }

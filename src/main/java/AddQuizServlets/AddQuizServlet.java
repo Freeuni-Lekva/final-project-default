@@ -1,4 +1,4 @@
-
+package AddQuizServlets;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -6,6 +6,8 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import Quizs.*;
+
 
 @WebServlet(name = "AddQuizServlet", value = "/AddQuizServlet")
 public class AddQuizServlet extends HttpServlet {
@@ -30,6 +32,6 @@ public class AddQuizServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        request.getRequestDispatcher("AddQuestions.jsp").forward(request , response);
+        request.getRequestDispatcher("AddQuizJSPs/AddQuestions.jsp").forward(request , response);
     }
 }

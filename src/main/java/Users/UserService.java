@@ -1,3 +1,5 @@
+package Users;
+
 import javax.jws.soap.SOAPBinding;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

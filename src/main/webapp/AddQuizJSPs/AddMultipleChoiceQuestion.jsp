@@ -11,7 +11,7 @@
     <title>Add Multiple Choice Question</title>
 </head>
 <body>
-    <form action="AddMultipleAnswerQuestionServlet" id = "addMultipleChoice" method="post">
+    <form action="../AddMultipleAnswerQuestionServlet" id = "addMultipleChoice" method="post">
         <h1>Question:</h1><br>
         <textarea form="addMultipleChoice" maxlength="500" id="questionDescription" name="questionDescription" cols="15"></textarea>
         <br><br>
@@ -28,7 +28,7 @@
         </ul>
         <input type="submit" id = "addQuestionButton" name = "addQuestionButton" value="Add">
     </form>
-    <form action="AddQuestions.jsp" id = "BackForm" method = "get">
+    <form action="./AddQuestions.jsp" id = "BackForm" method = "get">
         <input type="submit" id = "BackButt" name = "BackButt" value="Back">
     </form>
 

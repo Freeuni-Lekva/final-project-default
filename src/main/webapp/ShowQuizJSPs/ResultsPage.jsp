@@ -18,11 +18,11 @@
 </head>
 <body>
     <%
-        User user = (User) request.getSession().getAttribute("currentUser");
+        User user = (User) request.getServletContext().getAttribute("currentUser");
         Integer score = (Integer)request.getAttribute("FinalScore");
-        java.sql.Date st_time = (Date) request.getAttribute("st_time");
-        java.sql.Date end_time = (Date) request.getAttribute("end_time");
-        Integer quizID = Integer.parseInt(request.getParameter("quiz_id"));
+        java.sql.Date st_time = (Date) request.getSession().getAttribute("st_time");
+        java.sql.Date end_time = (Date) request.getSession().getAttribute("end_time");
+        Integer quizID = Integer.parseInt((String) request.getSession().getAttribute("quiz_id"));
         IQuizDao quizDao;
         try {
             quizDao = new QuizDao();
@@ -49,10 +49,10 @@
     <h1>User <%=user.getUsername()%> got <%=score%> points in this quiz!</h1>
     <h2>Start Time : <%=st_time%> </br> End Time: <%=end_time%></h2>
     <%
-        ArrayList<Question> quests= (ArrayList<Question>) request.getAttribute("QuestionsList");
+        ArrayList<Question> quests= (ArrayList<Question>) request.getSession().getAttribute("QuestionsList");
         for (int i=0;i<quests.size();i++)
         {
-            String s = request.getParameter("question" + i);
+            String s = (String) request.getSession().getAttribute("question" + i);
             Question question = quests.get(i);
             out.println("<h2>Question Number " + i + 1 + "</h2>");
             ArrayList<Answer> answers;

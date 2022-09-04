@@ -26,11 +26,11 @@
         throw new RuntimeException(e);
     }
     Boolean feedback = true;
-    request.setAttribute("feedback",feedback);
-    ArrayList<Question> questions = (ArrayList<Question>) request.getAttribute("QuestionsList");
-    Integer curID = (Integer)request.getAttribute("CurrentQuestion");
+    request.getSession().setAttribute("feedback",feedback);
+    ArrayList<Question> questions = (ArrayList<Question>) request.getSession().getAttribute("QuestionsList");
+    Integer curID = (Integer)request.getSession().getAttribute("CurrentQuestion");
     Question question = questions.get(curID);
-    String s=request.getParameter("question"+curID);
+    String s= (String) request.getSession().getAttribute("question"+curID);
         ArrayList<Answer> answers;
         try {
             answers = questionDao.getAnswers(question);
