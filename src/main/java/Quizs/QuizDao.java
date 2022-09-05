@@ -80,8 +80,8 @@ public class QuizDao implements IQuizDao{
         st.setInt(2, limit);
         ResultSet rs = st.executeQuery();
 
-        while(rs.next()){
-            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5),rs.getBoolean(6),rs.getBoolean(7),rs.getBoolean(8),rs.getBoolean(9));
+        while (rs.next()) {
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getBoolean(6), rs.getBoolean(7), rs.getBoolean(8), rs.getBoolean(9));
             result.add(quiz);
         }
 
@@ -191,6 +191,62 @@ public class QuizDao implements IQuizDao{
     public boolean setQuizTime(int quizId, int quizTime) throws SQLException {
         PreparedStatement st = dbConn.getConnection().prepareStatement("UPDATE quizes SET quizTime = ? WHERE Id = ?");
         st.setInt(1, quizTime);
+        st.setInt(2, quizId);
+        int diff = st.executeUpdate();
+        st.close();
+
+        return diff >= 1;
+    }
+
+    public boolean setQuizRandomness(Quiz quiz, boolean isRandom) throws SQLException{
+        return setQuizRandomness(quiz.getId(), isRandom);
+    }
+
+    public boolean setQuizRandomness(int quizId, boolean isRandom) throws SQLException {
+        PreparedStatement st = dbConn.getConnection().prepareStatement("UPDATE quizes SET isRandom = ? WHERE Id = ?");
+        st.setBoolean(1, isRandom);
+        st.setInt(2, quizId);
+        int diff = st.executeUpdate();
+        st.close();
+
+        return diff >= 1;
+    }
+
+    public boolean setQuizToOnePage(Quiz quiz, boolean isOnePage) throws SQLException{
+        return setQuizToOnePage(quiz.getId(), isOnePage);
+    }
+
+    public boolean setQuizToOnePage(int quizId, boolean isOnePage) throws SQLException{
+        PreparedStatement st = dbConn.getConnection().prepareStatement("UPDATE quizes SET isOnePage = ? WHERE Id = ?");
+        st.setBoolean(1, isOnePage);
+        st.setInt(2, quizId);
+        int diff = st.executeUpdate();
+        st.close();
+
+        return diff >= 1;
+    }
+
+    public boolean setQuizImmediateCorrection(Quiz quiz, boolean isImmediateCorrection) throws SQLException{
+        return setQuizImmediateCorrection(quiz.getId(), isImmediateCorrection);
+    }
+
+    public boolean setQuizImmediateCorrection(int quizId, boolean isImmediateCorrection) throws SQLException{
+        PreparedStatement st = dbConn.getConnection().prepareStatement("UPDATE quizes SET immediateCorrection = ? WHERE Id = ?");
+        st.setBoolean(1, isImmediateCorrection);
+        st.setInt(2, quizId);
+        int diff = st.executeUpdate();
+        st.close();
+
+        return diff >= 1;
+    }
+
+    public boolean setQuizCanBePracticed(Quiz quiz, boolean canBePracticed) throws SQLException{
+        return setQuizCanBePracticed(quiz.getId(), canBePracticed);
+    }
+
+    public boolean setQuizCanBePracticed(int quizId, boolean canBePracticed) throws SQLException{
+        PreparedStatement st = dbConn.getConnection().prepareStatement("UPDATE quizes SET canBePracticed = ? WHERE Id = ?");
+        st.setBoolean(1, canBePracticed);
         st.setInt(2, quizId);
         int diff = st.executeUpdate();
         st.close();
