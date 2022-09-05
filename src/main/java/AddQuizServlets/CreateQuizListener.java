@@ -1,3 +1,6 @@
+package AddQuizServlets;
+
+import Quizs.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,9 +17,7 @@ public class CreateQuizListener implements ServletContextListener, HttpSessionLi
     public void contextInitialized(ServletContextEvent sce) {
         try {
             IQuizDao qDao = new QuizDao();
-            sce.getServletContext().setAttribute("QuizDao" , qDao);
             IQuestionDao questionDao = new QuestionDao();
-            sce.getServletContext().setAttribute("QuestionDao" , questionDao);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

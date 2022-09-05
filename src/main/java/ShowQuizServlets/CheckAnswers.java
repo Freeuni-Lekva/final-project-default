@@ -23,15 +23,15 @@ public class CheckAnswers extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         java.sql.Date end_time = new java.sql.Date(System.currentTimeMillis());
-        request.setAttribute("end_time",end_time);
+        request.getSession().setAttribute("end_time",end_time);
         Integer score=0;
-        ArrayList<Question> quests= (ArrayList<Question>) request.getAttribute("QuestionsList");
+        ArrayList<Question> quests= (ArrayList<Question>) request.getSession().getAttribute("QuestionsList");
 
         IQuestionDao  questdao= (IQuestionDao) request.getServletContext().getAttribute("QuestionDao");
 
         for (int i=0;i<quests.size();i++)
         {
-            String s=request.getParameter("question"+i);
+            String s= (String) request.getSession().getAttribute("question"+i);
             ArrayList<Answer>curans ;
             try {
                curans=questdao.getAnswers(quests.get(i));
@@ -53,14 +53,13 @@ public class CheckAnswers extends HttpServlet {
                 Set<String>os = new HashSet<>();
                 for (int j=0;j<answers.length;j++)
                     os.add(answers[j]);
-                int cursize=os.size();
                 for (int j=0;j<curans.size();j++)
                     if (curans.get(j).isCorrect() && os.contains(curans.get(j).getDescription()))
                         score++;
             }
         }
 
-        Integer quiz_id=Integer.parseInt(request.getParameter("quiz_id"));
+        Integer quiz_id=Integer.parseInt((String) request.getSession().getAttribute("quiz_id"));
 
         String ispracticed =request.getParameter("IsPracticed");
         if(ispracticed==null || ispracticed.equals("NO"))
@@ -72,8 +71,8 @@ public class CheckAnswers extends HttpServlet {
                 throw new RuntimeException(e);
             }
             try {
-                hs.addHistoryEntry(((User)(request.getSession().getAttribute("currentUser"))).getId(),quiz_id,score,
-                        (  java.sql.Date ) request.getAttribute("st_time"),end_time);
+                hs.addHistoryEntry( 1 ,quiz_id,score,
+                        (  java.sql.Date ) request.getSession().getAttribute("st_time"),end_time);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -83,6 +82,6 @@ public class CheckAnswers extends HttpServlet {
 
 
         request.setAttribute("FinalScore",score);
-        request.getRequestDispatcher("ResultsPage.jsp").forward(request,response);
+        request.getRequestDispatcher("/ShowQuizJSPs/ResultsPage.jsp").forward(request,response);
     }
 }

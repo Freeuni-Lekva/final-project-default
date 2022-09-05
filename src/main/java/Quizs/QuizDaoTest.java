@@ -1,3 +1,5 @@
+package Quizs;
+
 import Users.UserDao;
 import junit.framework.TestCase;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ public class QuizDaoTest extends TestCase {
         ud.addUser("pingvina", "salam");
         assertTrue(qd.getQuizzes().isEmpty());
 
-        qd.addQuiz("Cxeli dzagli", "blabla", 1, 400);
+        qd.addQuiz("Cxeli dzagli", "blabla", 1, 400, false ,false ,false , false);
         assertEquals(1, qd.getQuizzes().size());
         assertTrue(qd.getQuiz(1).getTitle().equals("Cxeli dzagli") && qd.getQuiz(1).getDescription().
                 equals("blabla") && qd.getQuiz(1).getQuizTime() == 400 && qd.getQuiz(1).getCreatorId() == 1);
@@ -38,7 +40,7 @@ public class QuizDaoTest extends TestCase {
         for(int i = 0; i < 15; i++){
             if(i % 3 == 0 && i != 0) count++;
             char title = (char)('a' + i);
-            qd.addQuiz("" + title, "", (i % 3) + 1, 250);
+            qd.addQuiz("" + title, "", (i % 3) + 1, 250, false ,false ,false , false);
             assertEquals(i + 1, qd.getQuizzes().size());
             assertTrue(qd.getQuiz(i + 1).getTitle().equals("" + title) && qd.getQuiz(i + 1).getDescription().
                     equals("") && qd.getQuiz(i + 1).getQuizTime() == 250 && qd.getQuiz(i + 1).getCreatorId() == (i % 3) + 1);
@@ -70,7 +72,7 @@ public class QuizDaoTest extends TestCase {
         }
 
         //testing removeQuiz on non-existent quiz
-        assertFalse(qd.removeQuiz(new Quiz(12, "", "", 2, 330)));
+        assertFalse(qd.removeQuiz(new Quiz(12, "", "", 2, 330, false ,false ,false , false)));
     }
 
     public void test3() throws SQLException, ClassNotFoundException {
@@ -81,8 +83,8 @@ public class QuizDaoTest extends TestCase {
         UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
         ud.addUser("kalduna", "");
         ud.addUser("sklinta", "");
-        qd.addQuiz("vano", "gejadze", 1, 200);
-        qd.addQuiz("guram", "jinoria", 2, 111);
+        qd.addQuiz("vano", "gejadze", 1, 200, false ,false ,false , false);
+        qd.addQuiz("guram", "jinoria", 2, 111, false ,false ,false , false);
 
         assertTrue(qd.getQuiz(1).getTitle().equals("vano") && qd.getQuiz(1).getDescription().equals("gejadze") &&
                 qd.getQuiz(1).getCreatorId() == 1 && qd.getQuiz(1).getQuizTime() == 200);
@@ -102,8 +104,8 @@ public class QuizDaoTest extends TestCase {
                 qd.getQuiz(1).getCreatorId() == 1 && qd.getQuiz(1).getQuizTime() == 111);
         assertTrue(qd.getQuiz(2).getTitle().equals("guram") && qd.getQuiz(2).getDescription().equals("jinoriaaa") &&
                 qd.getQuiz(2).getCreatorId() == 2 && qd.getQuiz(2).getQuizTime() == 200);
-        qd.updateQuiz(new Quiz(1, "vano", "gejadze", 1, 200));
-        qd.updateQuiz(new Quiz(2, "guram", "jinoria", 2, 111));
+        qd.updateQuiz(new Quiz(1, "vano", "gejadze", 1, 200, false ,false ,false , false));
+        qd.updateQuiz(new Quiz(2, "guram", "jinoria", 2, 111, false ,false ,false , false));
         assertTrue(qd.getQuiz(1).getTitle().equals("vano") && qd.getQuiz(1).getDescription().equals("gejadze") &&
                 qd.getQuiz(1).getCreatorId() == 1 && qd.getQuiz(1).getQuizTime() == 200);
         assertTrue(qd.getQuiz(2).getTitle().equals("guram") && qd.getQuiz(2).getDescription().equals("jinoria") &&
@@ -119,7 +121,7 @@ public class QuizDaoTest extends TestCase {
         UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "");
 
         ud.addUser("zaxarichi", "amas ramdeniaq gavlili");
-        qd.addQuiz("title", "description", 1, 200);
+        qd.addQuiz("title", "description", 1, 200, false ,false ,false , false);
         for(int i = 0; i < 15; i++){
             qdd.addQuestion(1, "FILL_QUESTION", "desc");
             assertEquals(i + 1, qd.getQuestions(qd.getQuiz(1)).size());

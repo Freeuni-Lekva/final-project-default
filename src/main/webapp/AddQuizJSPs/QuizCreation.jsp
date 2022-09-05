@@ -6,15 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>Create Quiz</title>
 </head>
 <body>
 <div style="display:inline-block;margin-right:20px;">
-    <%! public boolean ok = true;%>
     <h1>Quiz Creation</h1>
-    <form action="AddQuizServlet" id="addQuizForm" method="post">
+    <form action="../AddQuizServlet" id="addQuizForm" method="post">
         <label for="quizTitle">Quiz Title</label>
         <input form="addQuizForm" type="text" id="quizTitle" name="quizTitle"><br><br>
         <label for="quizTime">Length Of Quiz In Seconds</label>

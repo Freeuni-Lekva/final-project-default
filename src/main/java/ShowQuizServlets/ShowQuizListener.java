@@ -25,15 +25,20 @@ public class ShowQuizListener implements ServletContextListener, HttpSessionList
     public void contextInitialized(ServletContextEvent sce) {
         /* This method is called when the servlet context is initialized(when the Web application is deployed). */
         try {
+            UserService s = new UserService();
+            User u = s.getUser(1);
+            sce.getServletContext().setAttribute("currentUser" , u);
             IQuizDao qDao = new QuizDao();
             sce.getServletContext().setAttribute("QuizDao" , qDao);
             IQuestionDao questionDao = new QuestionDao();
             sce.getServletContext().setAttribute("QuestionDao" , questionDao);
-            IHistoryDao hDao = new HistoryDao("base","user","pass");
+            IHistoryDao hDao = new HistoryDao("quiz","root","password");
             sce.getServletContext().setAttribute("HistoryDao",hDao);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }
