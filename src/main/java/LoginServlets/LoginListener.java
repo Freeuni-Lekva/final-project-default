@@ -1,5 +1,9 @@
 package LoginServlets;
 
+import Achievement.AchievementDAO;
+import History.HistoryDao;
+import Mails.MailDao;
+import Quizs.DatabaseConnection;
 import Quizs.QuizDao;
 import Users.UserDao;
 import Users.UserService;
@@ -16,6 +20,10 @@ public class LoginListener implements ServletContextListener, HttpSessionListene
     private UserService us;
     private String message;
     private QuizDao qd;
+    private HistoryDao hd;
+    private MailDao md;
+    private AchievementDAO ad;
+    private DatabaseConnection dbc;
 
     public LoginListener() {
     }
@@ -25,8 +33,15 @@ public class LoginListener implements ServletContextListener, HttpSessionListene
         try {
             this.us = new UserService();
             this.qd = new QuizDao();
+            this.hd = new HistoryDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+            this.md = new MailDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+            this.dbc = new DatabaseConnection();
+            this.ad = new AchievementDAO(dbc.getConnection());
             sce.getServletContext().setAttribute("UserService", us);
             sce.getServletContext().setAttribute("QuizDao", qd);
+            sce.getServletContext().setAttribute("HistoryDao", hd);
+            sce.getServletContext().setAttribute("MailDao", md);
+            sce.getServletContext().setAttribute("AchievementDao", ad);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
