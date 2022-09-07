@@ -90,6 +90,23 @@ public class QuizDao implements IQuizDao{
         return result;
     }
 
+    public ArrayList<Quiz> getQuizzesByTitle(String title) throws SQLException {
+        ArrayList<Quiz> result = new ArrayList<>();
+
+        PreparedStatement st = dbConn.getConnection().prepareStatement("SELECT * FROM quizes WHERE Title = ?;");
+        st.setString(1, title);
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Quiz quiz = new Quiz(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getBoolean(6), rs.getBoolean(7), rs.getBoolean(8), rs.getBoolean(9));
+            result.add(quiz);
+        }
+
+        st.close();
+
+        return result;
+    }
+
     public Quiz getQuiz(int id) throws SQLException {
         PreparedStatement st = dbConn.getConnection().prepareStatement("SELECT * FROM quizes WHERE Id = ?;");
         st.setInt(1, id);
