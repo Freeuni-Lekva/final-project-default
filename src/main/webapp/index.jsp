@@ -12,6 +12,7 @@
 <br/>
 <a href="AddQuizJSPs/QuizCreation.jsp">Create Quiz</a>
 <a href="AddQuizJSPs/AddQuestions.jsp">Add Questions</a>
+<a href="SearchJSPs/Search.jsp">Search</a>
 <form method="POST" action="ShowQuizJSPs/ShowQuiz.jsp">
     <input type="hidden" id="quiz_id" name="quiz_id" value="10">
     <input type="submit">

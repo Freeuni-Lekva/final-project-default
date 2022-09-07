@@ -96,7 +96,7 @@ public class UserDao implements IUserDao {
     public List<User> searchByUsername(String userName) throws SQLException {
         List<User> resultList = new ArrayList<>();
         Statement stm = conn.createStatement();
-        ResultSet res = stm.executeQuery("select * from users where username like '%" + userName + "%'");
+        ResultSet res = stm.executeQuery("select * from users where username like LOWER('%" + userName + "%')");
         while(res.next()){
             User newUser = new User(res.getInt(1) , res.getString(2) , res.getBoolean(4));
             resultList.add(newUser);
