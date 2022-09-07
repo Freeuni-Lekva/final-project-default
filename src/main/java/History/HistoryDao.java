@@ -1,5 +1,8 @@
 package History;
 
+import Quizs.Quiz;
+import Quizs.QuizDao;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -63,6 +66,44 @@ public class HistoryDao implements IHistoryDao{
         statement.close();
         return arr;
     }
+
+    public ArrayList<Quiz> getPopularQuizzes(int limit) throws SQLException, ClassNotFoundException {
+        ArrayList<Quiz> result = new ArrayList<>();
+
+        PreparedStatement st = connection.prepareStatement("SELECT quiz_id FROM history ORDER BY COUNT(quiz_id) DESC LIMIT ?;");
+        st.setInt(1, limit);
+        ResultSet rs = st.executeQuery();
+        QuizDao qd = new QuizDao();
+
+        while(rs.next()){
+            Quiz quiz = qd.getQuiz(rs.getInt(1));
+            result.add(quiz);
+        }
+
+        st.close();
+
+        return result;
+    }
+
+    public ArrayList<Quiz> getRecentQuizzesTakenBy(int userId, int limit) throws SQLException, ClassNotFoundException {
+        ArrayList<Quiz> result = new ArrayList<>();
+
+        PreparedStatement st = connection.prepareStatement("SELECT quiz_id FROM history WHERE user_Id = ? ORDER BY end_time DESC LIMIT ?;");
+        st.setInt(1, userId);
+        st.setInt(2, limit);
+        ResultSet rs = st.executeQuery();
+        QuizDao qd = new QuizDao();
+
+        while(rs.next()){
+            Quiz quiz = qd.getQuiz(rs.getInt(1));
+            result.add(quiz);
+        }
+
+        st.close();
+
+        return result;
+    }
+
     public void addHistoryEntry(History history) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("insert into history(user_id,quiz_id,score,start_time,end_time) values (?,?,?,?,?)");
         preparedStatement.setInt(1,history.getUser_id());
