@@ -9,7 +9,9 @@ create table users(
 	Id serial primary key,
     username varchar(50) unique,
     password_hash varchar(200),
-    is_admin boolean
+    is_admin boolean,
+    is_banned boolean,
+    ban_expiration date
 );
 
 create table quizes(
