@@ -11,6 +11,7 @@ public interface IQuizDao {
     ArrayList<Quiz> getRecentQuizzes(int limit) throws SQLException;
     ArrayList<Quiz> getRecentQuizzes(User user, int limit) throws SQLException;
     ArrayList<Quiz> getRecentQuizzes(int userId, int limit) throws SQLException;
+    ArrayList<Quiz> getQuizzesByTitle(String title) throws SQLException;
     Quiz getQuiz(int id) throws SQLException;
     Quiz addQuiz(String title, String description, int creatorId, int quizTime,boolean isRandom,boolean isOnePage,boolean immediateCorrection,boolean canBePracticed) throws SQLException;
     boolean removeQuiz(Quiz quiz) throws SQLException;
