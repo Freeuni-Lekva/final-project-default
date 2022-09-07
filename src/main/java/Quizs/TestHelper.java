@@ -7,7 +7,8 @@ public class TestHelper {
     private static final String CREATE_USERS = "create table users(Id serial primary key,username varchar(50) unique," +
             "password_hash varchar(200),is_admin boolean);";
     private static final String CREATE_QUIZZES = "create table quizes(Id serial primary key,Title varchar(200)," +
-            "description varchar(1500),creator_id bigint unsigned,foreign key (creator_id) references users(id),quizTime bigint);";
+            "description varchar(1500),creator_id bigint unsigned,foreign key (creator_id) references users(id),quizTime bigint, " +
+            "isRandom boolean, isOnePage boolean, immediateCorrection boolean, canBePracticed boolean);";
     private static final String CREATE_QUESTIONS = "create table questions(Id serial primary key,quiz_id bigint unsigned," +
             "Question_type varchar(30),Question_Description varchar(2000),foreign key (quiz_id) references QUIZES(id));";
     private static final String CREATE_ANSWERS = "create table answers(Id serial primary key,Question_id bigint unsigned," +
@@ -60,5 +61,4 @@ public class TestHelper {
         st.execute(CREATE_ACHIEVEMENTS);
         st.execute(CREATE_ACHIEVEMENTS_HISTORY);
     }
-
 }

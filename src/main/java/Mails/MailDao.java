@@ -89,6 +89,17 @@ public class MailDao implements  IMailDao{
         return result;
     }
 
+    public List<Mail> getUsersRecentIncomingMails(int userId) throws SQLException {
+        List<Mail> result = new ArrayList<>();
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM mails WHERE to_Id = ? ORDER BY send_date DESC;");
+        statement.setInt(1, userId);
+        ResultSet res = statement.executeQuery();
+        while (res.next()) {
+            result.add(mailParser(res));
+        }
+        return result;
+    }
+
     public List<Mail> getUsersOutgoingMails(int user_id) throws SQLException {
       //  connection.createStatement().executeUpdate("USE quiz");
         List<Mail> result = new ArrayList<>();

@@ -25,7 +25,7 @@ public class UserService {
     private static final Pattern username_pattern = Pattern.compile(USERNAME_PATTERN_STRING);
 
     public UserService() throws SQLException, NoSuchAlgorithmException {
-        userDao = new UserDao("jdbc:mysql://localhost:3306/quiz" , "root" , "password");
+        userDao = new UserDao("jdbc:mysql://localhost:3306/quiz" , "root" , "tagvi_400");
         md = MessageDigest.getInstance("SHA");
     }
 
@@ -79,6 +79,18 @@ public class UserService {
     private boolean match(String username , String password) {
         Matcher passMatcher = pasword_pattern.matcher(password);
         if(!passMatcher.matches()) return false;
+        Matcher usMatcher = username_pattern.matcher(username);
+        if(!usMatcher.matches()) return false;
+        return true;
+    }
+
+    public boolean passwordMatch(String password){
+        Matcher passMatcher = pasword_pattern.matcher(password);
+        if(!passMatcher.matches()) return false;
+        return true;
+    }
+
+    public boolean usernameMatch(String username){
         Matcher usMatcher = username_pattern.matcher(username);
         if(!usMatcher.matches()) return false;
         return true;
