@@ -125,6 +125,10 @@ public class UserService {
     }
 
 
+    public boolean banUser(String username, int days) throws SQLException {
+        Date expireDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(days));
+        return userDao.banUser(username, expireDate);
+    }
     /*
 	 Given a byte[] array, produces a hex String,
 	 such as "234a6f". with 2 chars for each byte in the array.
