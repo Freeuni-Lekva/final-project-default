@@ -154,4 +154,14 @@ public class UserDao implements IUserDao {
         }
         return resultList;
     }
+    
+    @Override
+    public boolean banUser(String username, Date ban_expiration) throws SQLException {
+        int id = this.getUser(username).getId();
+        PreparedStatement stm = conn.prepareStatement("update users set is_banned = true, ban_expiration = ? where id = ?");
+        stm.setDate(1, ban_expiration);
+        stm.setInt(2, id);
+        int changed = stm.executeUpdate();
+        return changed > 0;
+    }
 }
