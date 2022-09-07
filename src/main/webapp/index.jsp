@@ -14,9 +14,8 @@
     <input type="password" id="password" name="password"/><br/>
     <input type="submit" value="Login"/>
 </form>
+
 <a href="LoginJSPs/CreateAccount.jsp">Create Account</a>
-<a href="AddQuestionResponseQuestion.jsp"> Add</a>
-<a href="QuizCreation.jsp"> Add</a>
 
 </body>
 </html>
