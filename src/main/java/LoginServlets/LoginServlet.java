@@ -1,5 +1,6 @@
 package LoginServlets;
 
+import Users.User;
 import Users.UserDao;
 import Users.UserService;
 
@@ -22,6 +23,8 @@ public class LoginServlet extends HttpServlet {
 
         try {
             if(us.login(username, password)){
+                User user = us.getUser(username);
+                request.getSession().setAttribute("user", user);
                 request.getRequestDispatcher("./Homepage.jsp").forward(request, response);
             }else{
                 request.getRequestDispatcher("LoginJSPs/LoginDenied.jsp").forward(request, response);

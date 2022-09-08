@@ -37,6 +37,8 @@ public class CreateAccountServlet extends HttpServlet {
                         request.getRequestDispatcher("LoginJSPs/AccountCreationDenied.jsp").forward(request, response);
                     }
                 }else{
+                    User useR = us.getUser(username);
+                    request.getSession().setAttribute("user", useR);
                     request.getRequestDispatcher("./Homepage.jsp").forward(request, response);
                 }
             }

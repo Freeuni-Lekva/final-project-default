@@ -120,6 +120,10 @@ public class UserService {
         return userDao.searchByUsername(username);
     }
 
+    public List<User> getFriends(User user) throws SQLException {
+        return userDao.getFriends(user);
+    }
+
 
     /*
 	 Given a byte[] array, produces a hex String,
