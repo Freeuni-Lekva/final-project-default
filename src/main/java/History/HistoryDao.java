@@ -53,9 +53,9 @@ public class HistoryDao implements IHistoryDao{
 
     public HistorySummary getHistorySummary(int quiz_id) throws SQLException{
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select avg(score), avg(timestampdiff(minute,start_time,end_time)) from history");
+        ResultSet resultSet = statement.executeQuery("select avg(score), avg(timestampdiff(minute,start_time,end_time)) from history where quiz_id = " + quiz_id);
         resultSet.next();
-        HistorySummary res =  new HistorySummary(resultSet.getInt(1), resultSet.getDouble(2));
+        HistorySummary res =  new HistorySummary(resultSet.getDouble(1), resultSet.getDouble(2));
         statement.close();
         return res;
     }
@@ -70,13 +70,13 @@ public class HistoryDao implements IHistoryDao{
     public ArrayList<Quiz> getPopularQuizzes(int limit) throws SQLException, ClassNotFoundException {
         ArrayList<Quiz> result = new ArrayList<>();
 
-        PreparedStatement st = connection.prepareStatement("SELECT quiz_id FROM history ORDER BY COUNT(quiz_id) DESC LIMIT ?;");
+        PreparedStatement st = connection.prepareStatement("SELECT COUNT(quiz_id) AS count, quiz_id FROM history GROUP BY quiz_id ORDER BY count DESC LIMIT ?;");
         st.setInt(1, limit);
         ResultSet rs = st.executeQuery();
         QuizDao qd = new QuizDao();
 
         while(rs.next()){
-            Quiz quiz = qd.getQuiz(rs.getInt(1));
+            Quiz quiz = qd.getQuiz(rs.getInt(2));
             result.add(quiz);
         }
 
