@@ -43,6 +43,7 @@ public class ShowQuizServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        request.getSession().setAttribute("IsPracticed",request.getParameter("IsPracticed"));
 
         if (currentQuiz.isOnePage())
         {

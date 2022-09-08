@@ -65,6 +65,8 @@
                 image.src = URL.createObjectURL(event.target.files[0]);
             };
         </script>
+        <h2>Question:</h2>
+        <input form="addPictureResponse" type="text" name="imgQuestion"/><br>
         <h2>Answer:</h2>
         <input form="addPictureResponse" type="text" name="answer"/><br><br>
         <input class="button1" form="addPictureResponse" type="submit" id="addQuestionButton" name="addQuestionButton"

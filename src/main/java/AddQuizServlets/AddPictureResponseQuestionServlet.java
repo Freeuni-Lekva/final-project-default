@@ -20,6 +20,7 @@ public class AddPictureResponseQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IQuestionDao questionDao = (IQuestionDao) request.getServletContext().getAttribute("QuestionDao");
         String question = request.getParameter("questionDescription");
+        question = question + " " + request.getParameter("imgQuestion");
         try {
             questionDao.addQuestion(4 , "PICTURE_RESPONSE" , "tempo");
         } catch (SQLException e) {

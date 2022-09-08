@@ -34,6 +34,7 @@ public class ShowQuizListener implements ServletContextListener, HttpSessionList
             sce.getServletContext().setAttribute("QuestionDao" , questionDao);
             IHistoryDao hDao = new HistoryDao("quiz","root","password");
             sce.getServletContext().setAttribute("HistoryDao",hDao);
+            sce.getServletContext().setAttribute("UserService",s);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

@@ -10,71 +10,184 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
     <%
-    IQuizDao quizDao = (QuizDao) request.getServletContext().getAttribute("QuizDao");
-    IQuestionDao questionDao = (QuestionDao) request.getServletContext().getAttribute("QuestionDao");
-    Quiz quiz;
-    try {
-             quiz=quizDao.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
+        IQuizDao quizDao = (QuizDao) request.getServletContext().getAttribute("QuizDao");
+        IQuestionDao questionDao = (QuestionDao) request.getServletContext().getAttribute("QuestionDao");
+        Quiz quiz;
+        try {
+            quiz = quizDao.getQuiz(Integer.parseInt(request.getParameter("quiz_id")));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     %>
 
+    <title><%=quiz.getTitle()%>
+    </title>
 
+    <div class="topnav">
+        <a href="">Home</a>
+        <a href="#news">Profile</a>
+        <a href="#contact">Contact</a>
+        <a href="#about">About</a>
+        <% if (request.getSession().getAttribute("CurrentUser") != null) {
+            out.println("<a class = \"logout\" href=\"\">Log Out</a>");
+        }%>
+    </div>
+    <style>
+        .topnav {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        /* Style the links inside the navigation bar */
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        /* Change the color of links on hover */
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav .logout {
+            float: right;
+        }
+
+    </style>
 </head>
 
 
 <body>
-<form action = "SinglePageCheckAnswersForwarder" method="post">
-    <%
+<div class="form">
+    <h1><%=quiz.getTitle()%></h1>
+    <form action="SinglePageCheckAnswersForwarder" method="post">
+            <%
         ArrayList<Question> questions;
         try {
-             questions=questionDao.getQuestions(quiz);
+            questions = questionDao.getQuestions(quiz);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        for (int i=0;i<questions.size();i++)
-        {
-            Question curquest=questions.get(i);
-            String s=curquest.getType();
-            if (s.equals("QUESTION_RESPONSE") || s.equals("FILL_QUESTION"))
-            {
-                out.println("<p>"+curquest.getDescription()+"</p>");
-                out.println("<input type=\"text\" name=\"question" + i + "\"" + ">");
+        for (int i = 0; i < questions.size(); i++) {
+            Question curquest = questions.get(i);
+            String s = curquest.getType();
+            if (s.equals("QUESTION_RESPONSE")) {
+                out.println("<h4>Question #" + (i + 1) + "</h4>");
+                out.println("<h5>Please Write Answers To This Question, Separate Them With Comma</h5>");
+                out.println("<p>" + curquest.getDescription() + "</p>");
+                out.println("<input type=\"text\" name=\"question" + i + "\"" + ">" + "<br><br>");
             }
 
-            if (s.equals("MULTIPLE_CHOICE"))
-            {
-                out.println("<p>"+curquest.getDescription()+"</p>");
+            if (s.equals("FILL_QUESTION")) {
+                out.println("<h4>Question #" + (i + 1) + "</h4>");
+                out.println("<h5>Please Fill \"[Blanks]\" , Separate Answers With Comma and Write Them In Order</h5>");
+                out.println("<p>" + curquest.getDescription() + "</p>");
+                out.println("<input type=\"text\" name=\"question" + i + "\"" + ">" + "<br>" + "<br>");
+            }
+
+            if (s.equals("MULTIPLE_CHOICE")) {
+                out.println("<h4>Question #" + (i + 1) + "</h4>");
+                out.println("<h5>Please Choose Answer</h5>");
+                out.println("<p>" + curquest.getDescription() + "</p>");
                 ArrayList<Answer> ans;
                 try {
                     ans = questionDao.getAnswers(curquest);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-                for (int k=0;k<ans.size();k++)
-                {
+                for (int k = 0; k < ans.size(); k++) {
                     String answer = ans.get(k).getDescription();
                     out.println("<input type=\"radio\" name=\"question" + i + "\" " + "value=" +
-                            answer  + "> " + answer + "</br>");
+                            answer + "> " + answer + "</br>" + "<br>");
                 }
             }
-            if (s.equals("PICTURE_RESPONSE"))
-            {
-
-                out.println("<p>"+"<img src=\""+curquest.getDescription() + "\"" + "alt=\"" + curquest.getDescription() + "\"" +">"+"</p>");
-                out.println("<input type=\"text\" name=\"question" + i + "\"" + ">");
+            if (s.equals("PICTURE_RESPONSE")) {
+                out.println("<h4>Question #" + (i + 1) + "</h4>");
+                out.println("<h5>Please Write Answers To This Question, Separate Them With Comma</h5>");
+                String link = curquest.getDescription().substring(0, curquest.getDescription().indexOf(' '));
+                String quest = curquest.getDescription().substring(curquest.getDescription().indexOf(' '));
+                out.println("<p>" + "<img src=\"" + link + "\"" + "alt=\"" + link + "\"" + ">" + "</p>");
+                out.println("<p>" + quest + "</p>");
+                out.println("<input type=\"text\" name=\"question" + i + "\"" + ">" + "<br>" + "<br>");
 
             }
 
         }
 
     %>
-    <input type = "submit" id = "SubmitQuizButton" name = "Submit Quiz">
-
+        <input class="button1" type="submit" id="SubmitQuizButton" name="Submit Quiz">
+</div>
 </form>
 </body>
 </html>
+<style>
+
+    input {
+        font-family: Arial, Helvetica, sans-serif;
+        border: 2px solid gray;
+        border-radius: 5px;
+        display: inline-block;
+        float: left;
+    }
+
+    .button1 {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 10px;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 8px;
+        transition-duration: 0.4s;
+    }
+
+    .button1:hover {
+        box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    div.form {
+        font-family: Arial, Helvetica, sans-serif;
+        display: block;
+        text-align: center;
+    }
+
+    form {
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+    }
+
+    body {
+        background: linear-gradient(-45deg, #fdb8a0, #f5a0bf, #7ab7d0, #88d2c0);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+</style>
+
