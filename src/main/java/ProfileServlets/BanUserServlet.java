@@ -25,7 +25,7 @@ public class BanUserServlet extends HttpServlet {
         int days = Integer.valueOf(req.getParameter("time"));
         try {
             UserService ser = new UserService();
-            ser.banUser(username, days);
+            //ser.banUser(username, days);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {

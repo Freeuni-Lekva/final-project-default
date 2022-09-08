@@ -55,7 +55,7 @@
     <form action="../AddQuizServlet" id="addQuizForm" method="post">
         <label for="quizTitle">Quiz Title</label>
         <input form="addQuizForm" type="text" id="quizTitle" name="quizTitle"><br><br>
-        <label for="quizTime">Length Of Quiz In Seconds</label>
+        <label for="quizTime">Length Of Quiz In Minutes</label>
         <input form="addQuizForm" type="number" id="quizTime" name="quizTime"><br><br>
         <label for="quizDescription">Quiz Description</label>
         <textarea form="addQuizForm" maxlength="1500" name="quizDescription" id="quizDescription"

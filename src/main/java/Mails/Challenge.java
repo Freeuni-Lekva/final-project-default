@@ -10,8 +10,11 @@ import java.util.Date;
 
 public class Challenge extends Mail {
 
-    public Challenge(int mailId, int fromId, int toId, Date sentDate) {
+    private String link;
+
+    public Challenge(int mailId, int fromId, int toId,String link , Date sentDate) {
         super(mailId, fromId, toId, sentDate);
+        this.link = link;
     }
 
     @Override
@@ -20,34 +23,12 @@ public class Challenge extends Mail {
     }
 
     @Override
-    String getTitle() {
-        String name;
-        try {
-            UserService us = new UserService();
-            User user = us.getUser(getId());
-            name = user.getUsername();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return name + " has challenged you to take a quiz!";
+    public String getTitle() {
+        return "You Have Been Challenged";
     }
 
     @Override
-    String getContent() {
-        int usersBestScore = 0;
-        String url = "";
-        try {
-            UserService us=new UserService();
-
-            //User user = us.getUser(getId());
-            // get users highest score
-            // get url
-        } catch (SQLException | NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return "Hey, can you beat my high score: " + usersBestScore + "?\n"
-                + "quiz link: " + url;
+    public String getContent() {
+        return link;
     }
 }

@@ -10,7 +10,7 @@ public class HistoryService {
     private IHistoryDao dao;
 
     public HistoryService() throws SQLException {
-        dao = new HistoryDao("jdbc:mysql://localhost:3306/quiz","root","alpine");
+        dao = new HistoryDao("jdbc:mysql://localhost:3306/quiz","root","password");
     }
     public ArrayList<History> getUsersFromHistory(int quiz_id) throws SQLException {
         return dao.getUsersFromHistory(quiz_id);

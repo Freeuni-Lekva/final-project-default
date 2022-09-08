@@ -154,7 +154,8 @@ public class UserDao implements IUserDao {
         }
         return resultList;
     }
-    
+
+
     @Override
     public boolean banUser(String username, Date ban_expiration) throws SQLException {
         int id = this.getUser(username).getId();

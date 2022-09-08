@@ -25,7 +25,7 @@ public class UserService {
     private static final Pattern username_pattern = Pattern.compile(USERNAME_PATTERN_STRING);
 
     public UserService() throws SQLException, NoSuchAlgorithmException {
-        userDao = new UserDao("jdbc:mysql://localhost:3306/quiz" , "root" , "tagvi_400");
+        userDao = new UserDao("jdbc:mysql://localhost:3306/quiz" , "root" , "password");
         md = MessageDigest.getInstance("SHA");
     }
 

@@ -1,5 +1,6 @@
 package Users;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
@@ -20,5 +21,4 @@ public interface IUserDao {
     List<User> getSentRequests(User user) throws SQLException;
     List<User> getReceivedRequests(User user) throws SQLException;
     boolean banUser(String username, Date ban_expiration) throws SQLException;
-
 }

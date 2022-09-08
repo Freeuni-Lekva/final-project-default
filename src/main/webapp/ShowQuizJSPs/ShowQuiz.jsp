@@ -268,7 +268,7 @@
         <%}%>
 
 
-        <input type="submit" id="startQuizButton" name="Start Quiz">
+        <input type="submit" class="button1" id="startQuizButton"  value="Start Quiz" name="Start Quiz">
     </form>
 </div>
 </body>

@@ -60,7 +60,7 @@ public class MailDao implements  IMailDao{
         } else if (type.equals("FRT")) {
             return new FriendRequest(id, fromId, toId, res.getDate(7));
         } else if (type.equals("CH")) {
-            return new Challenge(id, fromId, toId, res.getDate(7));
+            return new Challenge(id, fromId, toId, res.getString(6),res.getDate(7));
         }
         return null;
     }
