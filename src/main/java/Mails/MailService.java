@@ -1,5 +1,7 @@
 package Mails;
 
+import Quizs.DatabaseConnection;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,8 +12,8 @@ import java.util.List;
 public class MailService {
     IMailDao md;
 
-    public MailService() throws SQLException {
-        md = new MailDao("jdbc:mysql://localhost:3306/quiz","root","password");
+    public MailService() throws SQLException, ClassNotFoundException {
+        md = new MailDao(new DatabaseConnection().getConnection());
     }
 
 

@@ -5,12 +5,13 @@ import Quizs.QuizDao;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class HistoryDao implements IHistoryDao{
     private Connection connection;
 
-    public HistoryDao(String base, String user, String password) throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz",user,password);
+    public HistoryDao(Connection conn) throws SQLException {
+        connection = conn;
 
     }
 

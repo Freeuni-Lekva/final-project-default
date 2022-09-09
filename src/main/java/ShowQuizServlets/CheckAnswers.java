@@ -69,6 +69,8 @@ public class CheckAnswers extends HttpServlet {
                 hs=new HistoryService();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
             try {
                 hs.addHistoryEntry( 1 ,quiz_id,score,

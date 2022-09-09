@@ -1,5 +1,7 @@
 package Achievement;
 
+import Quizs.DatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,8 +12,8 @@ public class AchievementService {
 
     AchievementDAO dao;
 
-    public AchievementService() throws SQLException {
-        dao = new AchievementDAO(DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz","root","password"));
+    public AchievementService() throws SQLException, ClassNotFoundException {
+        dao = new AchievementDAO(new DatabaseConnection().getConnection());
     }
 
     public void createNewAchievement(String name, String description) throws SQLException {

@@ -1,5 +1,7 @@
 package Users;
 
+import Quizs.DatabaseConnection;
+
 import javax.jws.soap.SOAPBinding;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,8 +26,8 @@ public class UserService {
 
     private static final Pattern username_pattern = Pattern.compile(USERNAME_PATTERN_STRING);
 
-    public UserService() throws SQLException, NoSuchAlgorithmException {
-        userDao = new UserDao("jdbc:mysql://localhost:3306/quiz" , "root" , "password");
+    public UserService() throws SQLException, NoSuchAlgorithmException, ClassNotFoundException {
+        userDao = new UserDao(new DatabaseConnection().getConnection());
         md = MessageDigest.getInstance("SHA");
     }
 

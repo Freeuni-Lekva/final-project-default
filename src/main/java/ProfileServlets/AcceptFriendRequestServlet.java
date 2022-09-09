@@ -27,8 +27,10 @@ public class AcceptFriendRequestServlet extends HttpServlet {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
-        req.getRequestDispatcher("Homepage.jsp").forward(req , resp);
+        resp.sendRedirect("Homepage/Homepage.jsp");
 
     }
 }

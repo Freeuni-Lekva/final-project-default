@@ -35,7 +35,7 @@ public class LoginListener implements ServletContextListener, HttpSessionListene
             this.us = new UserService();
             this.qd = new QuizDao();
             this.hd = new HistoryService();
-            this.md = new MailDao("jdbc:mysql://localhost:3306/quiz", "root", "password");
+            this.md = new MailDao(new DatabaseConnection().getConnection());
             this.dbc = new DatabaseConnection();
             this.ad = new AchievementDAO(dbc.getConnection());
             sce.getServletContext().setAttribute("UserService", us);

@@ -8,8 +8,8 @@ import java.util.List;
 public class UserDao implements IUserDao {
     Connection conn;
 
-    public UserDao(String base , String user , String password) throws SQLException {
-        conn = DriverManager.getConnection(base , user , password);
+    public UserDao(Connection conn) throws SQLException {
+        this.conn = conn;
     }
 
 

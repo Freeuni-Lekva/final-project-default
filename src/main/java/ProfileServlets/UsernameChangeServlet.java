@@ -17,16 +17,9 @@ public class UsernameChangeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // need login for this
-        try {
-            req.getSession().setAttribute("user", new UserService().getUser("zken7"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
 
-        User currentUser = (User) req.getSession().getAttribute("user");
+
+        User currentUser = (User) req.getSession().getAttribute("currentUser");
         String newUsername = req.getParameter("new-username");
 
         try {
@@ -45,6 +38,8 @@ public class UsernameChangeServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

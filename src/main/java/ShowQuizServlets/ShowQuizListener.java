@@ -2,10 +2,7 @@ package ShowQuizServlets;
 
 import History.HistoryDao;
 import History.IHistoryDao;
-import Quizs.IQuestionDao;
-import Quizs.IQuizDao;
-import Quizs.QuestionDao;
-import Quizs.QuizDao;
+import Quizs.*;
 import Users.User;
 import Users.UserService;
 
@@ -31,7 +28,7 @@ public class ShowQuizListener implements ServletContextListener, HttpSessionList
             sce.getServletContext().setAttribute("QuizDao" , qDao);
             IQuestionDao questionDao = new QuestionDao();
             sce.getServletContext().setAttribute("QuestionDao" , questionDao);
-            IHistoryDao hDao = new HistoryDao("quiz","root","password");
+            IHistoryDao hDao = new HistoryDao(new DatabaseConnection().getConnection());
             sce.getServletContext().setAttribute("HistoryDao",hDao);
             sce.getServletContext().setAttribute("UserService",s);
         } catch (SQLException e) {
@@ -59,6 +56,8 @@ public class ShowQuizListener implements ServletContextListener, HttpSessionList
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         HttpSession session = se.getSession();

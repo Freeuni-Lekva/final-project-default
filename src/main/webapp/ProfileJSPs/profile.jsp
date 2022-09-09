@@ -125,7 +125,6 @@
             </tr>
             <% List<AchievementHistory> userAchievements = (List<AchievementHistory>) request.getAttribute("achievements");
                 for (AchievementHistory ahist : userAchievements) {
-                    System.out.println(ahist.getDescription());
                     out.println("<tr><td>" + ahist.getName() + "</td><td>" + ahist.getDescription() + "</td><td>" + ahist.getDate() + "</td></tr>");
                 }
             %>

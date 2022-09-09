@@ -13,8 +13,8 @@ public class MailDao implements  IMailDao{
     }
 */
 
-    public MailDao(String base, String user, String password) throws SQLException {
-        connection = DriverManager.getConnection(base,user,password);
+    public MailDao(Connection conn) throws SQLException {
+        connection = conn;
     }
 
 

@@ -56,7 +56,7 @@
 <body>
 <div class="form">
     <%
-        User user = (User) request.getServletContext().getAttribute("currentUser");
+        User user = (User) request.getSession().getAttribute("currentUser");
         Integer score = (Integer) request.getAttribute("FinalScore");
         java.sql.Date st_time = (Date) request.getSession().getAttribute("st_time");
         java.sql.Date end_time = (Date) request.getSession().getAttribute("end_time");
@@ -122,7 +122,7 @@
             }
         }
     %>
-    <form action="HomePage.jsp">
+    <form action="./Homepage/Homepage.jsp">
         <input type="submit" class="button1" value="Return to home page"/>
     </form>
 </div>

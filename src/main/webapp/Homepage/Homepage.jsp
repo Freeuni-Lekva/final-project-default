@@ -89,9 +89,8 @@
         <a class="logout" href="../LoginJSPs/LoginJSP.jsp">Log In</a>
         <%}%>
         <a href="../SearchJSPs/Search.jsp">Search</a>
-        <a href="#about">About</a>
         <% if (request.getSession().getAttribute("currentUser") != null) { %>
-        <a href="../profile?user=Nika">Profile</a>
+        <a href="../profile?user=<%=user.getUsername()%>">Profile</a>
         <a class="logout" href="../LogOutServlet">Log Out</a>
         <%}%>
     </div>
@@ -147,7 +146,7 @@
             </tr>
             <%
                 for (Quiz quiz : popularQuizzes) {
-                    out.println("<tr><td>" + "<a href=\"ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
+                    out.println("<tr><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
                 }
             %>
         </table>
@@ -161,7 +160,7 @@
             </tr>
             <%
                 for (Quiz quiz : recentQuizzes) {
-                    out.println("<tr><td>" + "<a href=\"ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
+                    out.println("<tr><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
                 }
             %>
         </table>
@@ -176,7 +175,7 @@
             </tr>
             <%
                 for (Quiz quiz : recetQuizTakeActivity) {
-                    out.println("<tr><td>" + "<a href=\"ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
+                    out.println("<tr><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
                 }
             %>
         </table>
@@ -190,7 +189,7 @@
             </tr>
             <%
                 for (Quiz quiz : recentQuizCreationActivities) {
-                    out.println("<tr><td>" + "<a href=\"ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
+                    out.println("<tr><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
                 }
             %>
         </table>
@@ -217,7 +216,7 @@
             </tr>
             <%
                 for (User friendsTaken : friendRecentQuizzesTaken.keySet()) {
-                    out.println("<tr><td>" + friendsTaken.getUsername() + "</td><td>" + "<a href=\"ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + friendRecentQuizzesTaken.get(friendsTaken).getId() + "\">" + friendRecentQuizzesTaken.get(friendsTaken).getTitle() + "</a>" + "</td></tr>");
+                    out.println("<tr><td>" + friendsTaken.getUsername() + "</td><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + friendRecentQuizzesTaken.get(friendsTaken).getId() + "\">" + friendRecentQuizzesTaken.get(friendsTaken).getTitle() + "</a>" + "</td></tr>");
                 }%>
         </table>
     </div>
@@ -230,7 +229,7 @@
             </tr>
             <%
                 for (User friendsTaken : friendRecentQuizCreatingActivities.keySet()) {
-                    out.println("<tr><td>" + friendsTaken.getUsername() + "</td><td>" + "<a href=\"ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + friendRecentQuizzesTaken.get(friendsTaken).getId() + "\">" + friendRecentQuizzesTaken.get(friendsTaken).getTitle() + "</a>" + "</td></tr>");
+                    out.println("<tr><td>" + friendsTaken.getUsername() + "</td><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + friendRecentQuizzesTaken.get(friendsTaken).getId() + "\">" + friendRecentQuizzesTaken.get(friendsTaken).getTitle() + "</a>" + "</td></tr>");
                 }%>
         </table>
     </div>

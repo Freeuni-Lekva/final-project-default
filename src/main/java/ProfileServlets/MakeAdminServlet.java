@@ -17,7 +17,7 @@ public class MakeAdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("currentUser");
         if (user == null || !user.isAdmin()) {
             return;
         }
@@ -28,6 +28,8 @@ public class MakeAdminServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

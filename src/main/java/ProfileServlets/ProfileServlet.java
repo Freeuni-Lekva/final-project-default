@@ -42,7 +42,7 @@ public class ProfileServlet extends HttpServlet {
 //            throw new RuntimeException(e);
 //        }
 
-        User currUser = (User) req.getServletContext().getAttribute("currentUser");
+        User currUser = (User) req.getSession().getAttribute("currentUser");
         req.setAttribute("user", currUser);
         String username = req.getParameter("user");
         User visitingUser;
@@ -54,6 +54,8 @@ public class ProfileServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -104,6 +106,8 @@ public class ProfileServlet extends HttpServlet {
                 req.setAttribute("mailList", mailList);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -136,6 +140,8 @@ public class ProfileServlet extends HttpServlet {
                     }
                 }
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
             req.setAttribute("friendship", "none");

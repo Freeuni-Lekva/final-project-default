@@ -21,16 +21,13 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchTerm = request.getParameter("searchTerm");
         String type = request.getParameter("searchType");
-        if(type.equals("quiz")){
+        if (type.equals("quiz")) {
             try {
                 IQuizDao quizDao = new QuizDao();
                 ArrayList<Quiz> quizzs = quizDao.getQuizzes(searchTerm);
-                for(Quiz q : quizzs){
-                    System.out.println(q.getTitle());
 
-                }
-
-                //TODO
+                request.setAttribute("quizzes", quizzs);
+                request.getRequestDispatcher("./SearchJSPs/QuizSearch.jsp").forward(request, response);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
@@ -40,14 +37,15 @@ public class SearchServlet extends HttpServlet {
         } else {
             try {
                 UserService userService = new UserService();
-                List<User> users =  userService.searchByUsername(searchTerm);
-                for(User u : users){
-                    System.out.println(u.getUsername());
-                }
-                    //TODO
+                List<User> users = userService.searchByUsername(searchTerm);
+                request.setAttribute("users", users);
+                request.getRequestDispatcher("./SearchJSPs/UserSearch.jsp").forward(request, response);
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
 
