@@ -17,7 +17,7 @@ public class AcceptFriendRequestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("user");
+        User currentUser = (User) req.getSession().getAttribute("currentUser");
         User otherUser;
         try {
             UserService ser = new UserService();
@@ -27,6 +27,10 @@ public class AcceptFriendRequestServlet extends HttpServlet {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
+        resp.sendRedirect("Homepage/Homepage.jsp");
+
     }
 }

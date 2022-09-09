@@ -17,7 +17,7 @@ public class BanUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("currentUser");
         if (user == null || !user.isAdmin()) {
             return;
         }
@@ -25,10 +25,12 @@ public class BanUserServlet extends HttpServlet {
         int days = Integer.valueOf(req.getParameter("time"));
         try {
             UserService ser = new UserService();
-            ser.banUser(username, days);
+            //ser.banUser(username, days);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 

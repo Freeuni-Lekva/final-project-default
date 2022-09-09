@@ -16,8 +16,8 @@ public class HistoryDaoTest extends TestCase {
     protected void setUp() throws Exception {
         DatabaseConnection dbConn = new DatabaseConnection();
         TestHelper.deleteAndCreateDatabase(dbConn);
-        hDao = new HistoryDao("jdbc:mysql://localhost:3306/quiz","root","alpine");
-        uDao = new UserDao("jdbc:mysql://localhost:3306/quiz","root","alpine");
+        hDao = new HistoryDao(new DatabaseConnection().getConnection());
+        uDao = new UserDao(new DatabaseConnection().getConnection());
         qDao = new QuizDao();
         Date date = new Date(System.currentTimeMillis());
         History history1 = new History(1,1,1,10,date,date);

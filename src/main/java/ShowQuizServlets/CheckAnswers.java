@@ -61,13 +61,15 @@ public class CheckAnswers extends HttpServlet {
 
         Integer quiz_id=Integer.parseInt((String) request.getSession().getAttribute("quiz_id"));
 
-        String ispracticed =request.getParameter("IsPracticed");
-        if(ispracticed==null || ispracticed.equals("NO"))
+        String ispracticed =(String) request.getSession().getAttribute("IsPracticed");
+        if(ispracticed==null || !ispracticed.equals("YES"))
         {
             HistoryService hs;
             try {
                 hs=new HistoryService();
             } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
             try {

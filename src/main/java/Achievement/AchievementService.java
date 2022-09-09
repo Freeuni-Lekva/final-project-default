@@ -1,6 +1,9 @@
 package Achievement;
 
+import Quizs.DatabaseConnection;
+
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -9,8 +12,8 @@ public class AchievementService {
 
     AchievementDAO dao;
 
-    public AchievementService() {
-        // Somehow get connection
+    public AchievementService() throws SQLException, ClassNotFoundException {
+        dao = new AchievementDAO(new DatabaseConnection().getConnection());
     }
 
     public void createNewAchievement(String name, String description) throws SQLException {

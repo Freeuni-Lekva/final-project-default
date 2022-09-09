@@ -17,7 +17,7 @@ public class PasswordChangeServet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User currentUser = (User) req.getSession().getAttribute("user");
+        User currentUser = (User) req.getSession().getAttribute("currentUser");
         String oldPassword = req.getParameter("current-password");
         String newPassword = req.getParameter("new-password");
         if (oldPassword.equals(newPassword)) {
@@ -43,6 +43,8 @@ public class PasswordChangeServet extends HttpServlet {
             resp.getWriter().write("Couldn't change password for internal errors, try again later");
         } catch (NoSuchAlgorithmException e) {
             resp.getWriter().write("Couldn't change password for internal errors, try again later");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }

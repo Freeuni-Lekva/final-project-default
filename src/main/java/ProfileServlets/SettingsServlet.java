@@ -15,7 +15,7 @@ public class SettingsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("currentUser");
         if (user == null) {
             // TODO: HE IS NOT LOGINED! REDIRECT TO LOGGINING PAGEs
         }

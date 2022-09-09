@@ -11,6 +11,7 @@ public class FriendRequest extends Mail {
 
     public FriendRequest(int mailId, int fromId, int toId, Date sentDate) {
         super(mailId, fromId, toId, sentDate);
+
     }
 
     @Override
@@ -19,23 +20,12 @@ public class FriendRequest extends Mail {
     }
 
     @Override
-    String getTitle() {
-        String name;
-        try {
-            UserService us=new UserService();
-
-            User user = us.getUser(getId());
-            name = user.getUsername();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        return name + " sent you a friend request!";
+    public String getTitle() {
+        return "You Have Friend Request From";
     }
 
     @Override
-    String getContent() {
+    public String getContent() {
       return null;
       //return yes or no
     }

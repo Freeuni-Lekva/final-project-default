@@ -8,6 +8,7 @@ public class Quiz {
     private String description;
     private int creatorId;
     private int quizTimeSeconds;
+    private int Count;
 
     private boolean isRandom;
 
@@ -98,5 +99,13 @@ public class Quiz {
 
     public void setCanBePracticed(boolean canBePracticed) {
         this.canBePracticed = canBePracticed;
+    }
+
+    public int getCount() {
+        return Count;
+    }
+
+    public void setCount(int count) {
+        Count = count;
     }
 }

@@ -28,7 +28,8 @@ public class AddQuizServlet extends HttpServlet {
         boolean canBePracticed = request.getParameter("canBePracticed") != null;
         //System.out.println(title + " " + description + 1  + " " +  quizTime  + " " +  isRandom + " " +  isOnePage  + " " +  imediateCorrection  + " " +  canBePracticed);
         try {
-             dao.addQuiz(title , description , 1 , quizTime , isRandom , isOnePage , imediateCorrection , canBePracticed);
+            Quiz addQuiz = dao.addQuiz(title , description , 1 , quizTime , isRandom , isOnePage , imediateCorrection , canBePracticed);
+            request.getSession().setAttribute("NewQuiz" , addQuiz);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

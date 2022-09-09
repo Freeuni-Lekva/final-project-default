@@ -8,8 +8,8 @@ import java.util.List;
 public class UserDao implements IUserDao {
     Connection conn;
 
-    public UserDao(String base , String user , String password) throws SQLException {
-        conn = DriverManager.getConnection(base , user , password);
+    public UserDao(Connection conn) throws SQLException {
+        this.conn = conn;
     }
 
 
@@ -96,7 +96,7 @@ public class UserDao implements IUserDao {
     public List<User> searchByUsername(String userName) throws SQLException {
         List<User> resultList = new ArrayList<>();
         Statement stm = conn.createStatement();
-        ResultSet res = stm.executeQuery("select * from users where username like '%" + userName + "%'");
+        ResultSet res = stm.executeQuery("select * from users where username like LOWER('%" + userName + "%')");
         while(res.next()){
             User newUser = new User(res.getInt(1) , res.getString(2) , res.getBoolean(4));
             resultList.add(newUser);
@@ -154,7 +154,8 @@ public class UserDao implements IUserDao {
         }
         return resultList;
     }
-    
+
+
     @Override
     public boolean banUser(String username, Date ban_expiration) throws SQLException {
         int id = this.getUser(username).getId();

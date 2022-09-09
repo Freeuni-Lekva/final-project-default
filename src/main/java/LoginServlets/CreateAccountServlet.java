@@ -38,8 +38,7 @@ public class CreateAccountServlet extends HttpServlet {
                     }
                 }else{
                     User useR = us.getUser(username);
-                    request.getSession().setAttribute("user", useR);
-                    request.getRequestDispatcher("./Homepage.jsp").forward(request, response);
+                    response.sendRedirect("./Homepage/Homepage.jsp");
                 }
             }
         } catch (SQLException e) {
