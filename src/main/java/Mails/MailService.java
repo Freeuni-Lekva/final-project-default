@@ -33,6 +33,10 @@ public class MailService {
         return md.getUsersIncomingMails(user_id);
     }
 
+    List<Mail> getUsersRecentIncomingMails(int user_id) throws SQLException{
+        return md.getUsersRecentIncomingMails(user_id);
+    }
+
     public List<Mail> getUsersOutgoingMails(int user_id) throws SQLException {
         return md.getUsersOutgoingMails(user_id);
     }
