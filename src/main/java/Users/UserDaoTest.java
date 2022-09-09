@@ -3,6 +3,8 @@ package Users;
 import Quizs.DatabaseConnection;
 import Quizs.TestHelper;
 import junit.framework.TestCase;
+
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashSet;
 
@@ -71,6 +73,7 @@ public class UserDaoTest extends TestCase {
         ud.addUser("gulnazi", "3c216a4cbbfaba7367be060175c81359e722b588e7ca26ec35036af5bf13576e");
         ud.addUser("nazi", "8137e9e6a7b969a0144c6de82cf8cf5589c20857fb15e3b5eaa37eadeb0ba449");
         ud.addUser("balakanazi", "10");
+        ud.banUser("gulnazi", new Date(2022, 10, 10));
         ud.addUser("tengiza", "ska");
 
         assertEquals(3, ud.searchByUsername("nazi").size());
