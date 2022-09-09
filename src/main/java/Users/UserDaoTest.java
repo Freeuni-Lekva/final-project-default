@@ -13,7 +13,7 @@ public class UserDaoTest extends TestCase {
     public void test1() throws SQLException, ClassNotFoundException {
         DatabaseConnection dbConn = new DatabaseConnection();
         TestHelper.deleteAndCreateDatabase(dbConn);
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao(new DatabaseConnection().getConnection());
 
         HashSet<User> users = new HashSet<>();
         ud.getUsers(users);
@@ -35,7 +35,7 @@ public class UserDaoTest extends TestCase {
     public void test2() throws SQLException, ClassNotFoundException {
         DatabaseConnection dbConn = new DatabaseConnection();
         TestHelper.deleteAndCreateDatabase(dbConn);
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao(new DatabaseConnection().getConnection());
 
         for(int i = 0; i < 5; i++){
             ud.addUser("a" + i, "" + i);
@@ -68,7 +68,7 @@ public class UserDaoTest extends TestCase {
     public void test3() throws SQLException, ClassNotFoundException {
         DatabaseConnection dbConn = new DatabaseConnection();
         TestHelper.deleteAndCreateDatabase(dbConn);
-        UserDao ud = new UserDao("jdbc:mysql://localhost:3306/quiz", "root", "tagvi_400");
+        UserDao ud = new UserDao(new DatabaseConnection().getConnection());
 
         ud.addUser("gulnazi", "3c216a4cbbfaba7367be060175c81359e722b588e7ca26ec35036af5bf13576e");
         ud.addUser("nazi", "8137e9e6a7b969a0144c6de82cf8cf5589c20857fb15e3b5eaa37eadeb0ba449");

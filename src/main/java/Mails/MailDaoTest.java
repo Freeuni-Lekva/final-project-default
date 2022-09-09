@@ -17,12 +17,12 @@ public class MailDaoTest extends TestCase{
         super.setUp();
         DatabaseConnection dbcon=new DatabaseConnection();
         TestHelper.deleteAndCreateDatabase(dbcon);
-        userdao=new UserDao("jdbc:mysql://localhost:3306/quiz","root","twon");
+        userdao=new UserDao(new DatabaseConnection().getConnection());
         userdao.addUser("1","123");
         userdao.addUser("2","223");
         userdao.addUser("3","323");
 
-        md = new MailDao("jdbc:mysql://localhost:3306/quiz","root","twon");
+        md = new MailDao(new DatabaseConnection().getConnection());
         date=new Date(System.currentTimeMillis());
     }
 

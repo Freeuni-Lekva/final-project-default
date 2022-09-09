@@ -38,6 +38,8 @@ public class SendMailServlet extends HttpServlet {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }
