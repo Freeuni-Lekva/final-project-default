@@ -187,7 +187,7 @@
                             String username = usv.getUser(cur.getUser_id()).getUsername();
                             int score = cur.getScore();
                             String date = cur.getEnd_date().toString();
-                            out.println("<tr><td>FIRSTTABLE" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
+                            out.println("<tr><td>" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
@@ -210,7 +210,7 @@
                             String username = usv.getUser(cur.getUser_id()).getUsername();
                             int score = cur.getScore();
                             String date = cur.getEnd_date().toString();
-                            out.println("<tr><td>SECONDTABLE" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
+                            out.println("<tr><td>" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -234,7 +234,7 @@
                             String username = usv.getUser(cur.getUser_id()).getUsername();
                             int score = cur.getScore();
                             String date = cur.getEnd_date().toString();
-                            out.println("<tr><td>THIRDTABLE" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
+                            out.println("<tr><td>" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

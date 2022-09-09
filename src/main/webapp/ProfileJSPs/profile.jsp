@@ -79,9 +79,23 @@
     <input type="submit" class="button1" value=<%=friendBtnvalue%>>
 </form>
 <% } %>
+
 <div class="form">
     <h1>Welcome to <%=visitedUser.getUsername()%>'s profile</h1>
-
+    <% if (currUser != null && !visitedUser.getUsername().equals(currUser.getUsername())) {%>
+    <form action=sendmail method="post">
+        <h3>Send Message</h3>
+        <h5>Title</h5>
+        <input type="text" name="title"><br>
+        <input type="hidden" name="recipient" value="<%=visitedUser.getUsername()%>">
+        <h5>Message</h5>
+        <textarea maxlength="500" id="content" name="content"
+                  cols="15"></textarea>
+        <br>
+        <input type="submit" class="button1" value="Send Message">
+    </form>
+    <% } %>
+<br>
     <input class="tabs" type="button" name="Showdiv1" value="Taken Quizzes" onclick="showDiv('1')"/>
     <input class="tabs" type="button" name="Showdiv3" value="Added Quizzes" onclick="showDiv('3')"/>
     <input class="tabs" type="button" name="Showdiv2" value="Achievements" onclick="showDiv('2')"/>
@@ -185,6 +199,17 @@
         font-size: 15px;
         border-radius: 8px;
         transition-duration: 0.4s;
+    }
+
+    textarea {
+        border: 2px solid gray;
+        font-family: Arial, Helvetica, sans-serif;
+        border-radius: 5px;
+        resize: none;
+        width: 300px;
+        height: 100px;
+        display: inline-block;
+        float: left;
     }
 
     .tabs:hover {

@@ -19,7 +19,7 @@ public class SendMailServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User) req.getSession().getAttribute("user");
+        User user = (User) req.getSession().getAttribute("currentUser");
         if (user == null) return;
         String recipient = req.getParameter("recipient");
         String title = req.getParameter("title");
@@ -41,5 +41,7 @@ public class SendMailServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        resp.sendRedirect("./Homepage/Homepage.jsp");
     }
 }

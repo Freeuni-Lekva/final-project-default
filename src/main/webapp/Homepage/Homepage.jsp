@@ -91,6 +91,7 @@
         <a href="../SearchJSPs/Search.jsp">Search</a>
         <% if (request.getSession().getAttribute("currentUser") != null) { %>
         <a href="../profile?user=<%=user.getUsername()%>">Profile</a>
+        <a href="Mails.jsp">Mails</a>
         <a class="logout" href="../LogOutServlet">Log Out</a>
         <%}%>
     </div>

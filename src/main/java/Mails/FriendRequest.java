@@ -21,7 +21,7 @@ public class FriendRequest extends Mail {
 
     @Override
     public String getTitle() {
-        return "You Have Friend Request From";
+        return "New Friend Request";
     }
 
     @Override

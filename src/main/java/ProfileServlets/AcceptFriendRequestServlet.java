@@ -22,7 +22,7 @@ public class AcceptFriendRequestServlet extends HttpServlet {
         try {
             UserService ser = new UserService();
             otherUser = ser.getUser(req.getParameter("other-user"));
-            ser.addFriend(currentUser, otherUser);
+            ser.acceptFriend(otherUser ,currentUser);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {

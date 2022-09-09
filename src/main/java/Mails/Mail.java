@@ -42,9 +42,9 @@ public abstract class Mail {
         return true;
     }
 
-    abstract String getType();
-    abstract String getTitle();
-    abstract String getContent();
+    public abstract String getType();
+    public abstract String getTitle();
+    public abstract String getContent();
 
 
 }
