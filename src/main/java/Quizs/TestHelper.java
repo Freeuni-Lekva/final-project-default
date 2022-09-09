@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class TestHelper {
-    private static final String CREATE_USERS = "create table users(Id serial primary key,username varchar(50) unique," +
-            "password_hash varchar(200),is_admin boolean);";
+    private static final String CREATE_USERS = "create table users(Id serial primary key, username varchar(50) unique, " +
+            "password_hash varchar(200), is_admin boolean, is_banned boolean, ban_expiration date);";
     private static final String CREATE_QUIZZES = "create table quizes(Id serial primary key,Title varchar(200)," +
             "description varchar(1500),creator_id bigint unsigned,foreign key (creator_id) references users(id),quizTime bigint, " +
             "isRandom boolean, isOnePage boolean, immediateCorrection boolean, canBePracticed boolean);";
