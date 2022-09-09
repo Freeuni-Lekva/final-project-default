@@ -27,7 +27,6 @@ public class ShowQuizListener implements ServletContextListener, HttpSessionList
         try {
             UserService s = new UserService();
             User u = s.getUser(1);
-            sce.getServletContext().setAttribute("currentUser" , u);
             IQuizDao qDao = new QuizDao();
             sce.getServletContext().setAttribute("QuizDao" , qDao);
             IQuestionDao questionDao = new QuestionDao();
@@ -63,7 +62,6 @@ public class ShowQuizListener implements ServletContextListener, HttpSessionList
             throw new RuntimeException(e);
         }
         HttpSession session = se.getSession();
-        session.setAttribute("currentUser",user);
 
     }
 

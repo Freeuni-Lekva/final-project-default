@@ -1,6 +1,7 @@
 package Achievement;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -9,8 +10,8 @@ public class AchievementService {
 
     AchievementDAO dao;
 
-    public AchievementService() {
-        // Somehow get connection
+    public AchievementService() throws SQLException {
+        dao = new AchievementDAO(DriverManager.getConnection("jdbc:mysql://localhost:3306/quiz","root","password"));
     }
 
     public void createNewAchievement(String name, String description) throws SQLException {

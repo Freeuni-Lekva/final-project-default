@@ -11,7 +11,7 @@ public class MailService {
     IMailDao md;
 
     public MailService() throws SQLException {
-        md = new MailDao("jdbc:mysql://localhost:3306/quiz","root","twon");
+        md = new MailDao("jdbc:mysql://localhost:3306/quiz","root","password");
     }
 
 

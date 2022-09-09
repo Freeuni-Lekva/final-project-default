@@ -42,14 +42,14 @@ public class ProfileServlet extends HttpServlet {
 //            throw new RuntimeException(e);
 //        }
 
-        User currUser = (User) req.getSession().getAttribute("user");
+        User currUser = (User) req.getServletContext().getAttribute("currentUser");
         req.setAttribute("user", currUser);
-
         String username = req.getParameter("user");
         User visitingUser;
         // Get User
         try {
             visitingUser = new UserService().getUser(username);
+
             req.setAttribute("visitedUser", visitingUser);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,7 +59,7 @@ public class ProfileServlet extends HttpServlet {
 
         // User not found
         if (visitingUser == null) {
-            req.getRequestDispatcher("WEB-INF/userNotFound.jsp").forward(req, resp);
+            req.getRequestDispatcher("ProfileJSPs/userNotFound.jsp").forward(req, resp);
             return;
         }
 
@@ -107,7 +107,7 @@ public class ProfileServlet extends HttpServlet {
             }
         }
 
-        req.getRequestDispatcher("WEB-INF/profile.jsp").forward(req, resp);
+        req.getRequestDispatcher("ProfileJSPs/profile.jsp").forward(req, resp);
     }
 
     private void friendRequestButton(HttpServletRequest req, User currUser, User visitingUser) {

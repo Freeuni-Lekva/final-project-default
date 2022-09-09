@@ -24,10 +24,10 @@ public class LoginServlet extends HttpServlet {
         try {
             if(us.login(username, password)){
                 User user = us.getUser(username);
-                request.getSession().setAttribute("user", user);
-                request.getRequestDispatcher("./Homepage.jsp").forward(request, response);
+                request.getSession().setAttribute("currentUser", user);
+                response.sendRedirect("./Homepage/Homepage.jsp");
             }else{
-                request.getRequestDispatcher("LoginJSPs/LoginDenied.jsp").forward(request, response);
+                request.getRequestDispatcher("./LoginJSPs/LoginDenied.jsp").forward(request, response);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
