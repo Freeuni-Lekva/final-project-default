@@ -31,7 +31,20 @@ public abstract class Mail {
         return sentDate;
     }
 
-    public abstract String getType();
-    public abstract String getTitle();
-    public abstract String getContent();
+    @Override
+    public boolean equals(Object object){
+        Mail o= (Mail) object;
+        if (this.fromId!=o.fromId )return false;
+        if (this.toId!=o.toId) return false;
+        if (!this.getType().equals(o.getType())) return false;
+        //if (this.getDate().compareTo(o.getDate())!=0)return false;
+        if (!this.getContent().equals(o.getContent())) return false;
+        return true;
+    }
+
+    abstract String getType();
+    abstract String getTitle();
+    abstract String getContent();
+
+
 }
