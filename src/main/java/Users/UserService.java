@@ -5,6 +5,7 @@ import Quizs.DatabaseConnection;
 import javax.jws.soap.SOAPBinding;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -113,6 +114,28 @@ public class UserService {
         return true;
 
     }
+
+    private static java.util.Date addDays(java.util.Date d, int days)
+    {
+        d.setTime(d.getTime() + days * 1000 * 60 * 60 * 24);
+        return d;
+    }
+
+    public void banUser(String username,  int banDays) throws SQLException {
+        java.util.Date expirationDate = new java.util.Date();
+        addDays(expirationDate , banDays);
+        userDao.banUser(username ,  new java.sql.Date(expirationDate.getTime()));
+    }
+
+    public Date getBanExpiration(User user) throws SQLException {
+        return userDao.getBanExpiration(user.getUsername());
+    }
+
+    public void unBanUser(String username) throws SQLException {
+
+        userDao.unBanUser(username);
+    }
+
 
     public boolean acceptFriend(User sender , User receiver) throws SQLException {
         return userDao.acceptFriend(sender , receiver);

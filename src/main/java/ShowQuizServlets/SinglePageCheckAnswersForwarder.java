@@ -30,6 +30,7 @@ public class SinglePageCheckAnswersForwarder extends HttpServlet {
         for (int i=0;i<quests.size();i++) {
             request.getSession().setAttribute("question" + i, request.getParameter("question" + i) );
         }
+        System.out.println(request.getParameter("timeLeft"));
         request.getRequestDispatcher("CheckAnswers").forward(request,response);
     }
 }

@@ -28,7 +28,7 @@ public class CheckAnswers extends HttpServlet {
         ArrayList<Question> quests= (ArrayList<Question>) request.getSession().getAttribute("QuestionsList");
 
         IQuestionDao  questdao= (IQuestionDao) request.getServletContext().getAttribute("QuestionDao");
-
+        int maxScore = 0;
         for (int i=0;i<quests.size();i++)
         {
             String s= (String) request.getSession().getAttribute("question"+i);
@@ -43,19 +43,30 @@ public class CheckAnswers extends HttpServlet {
             {
                 for (int k=0;k<curans.size();k++)
                 {
-                    if (curans.get(k).isCorrect())
-                        if (s.equals(curans.get(k).getDescription()))
+                    if (curans.get(k).isCorrect()){
+                        if (s != null && s.equals(curans.get(k).getDescription()))
                             score++;
+                        maxScore++;
+                    }
                 }
             }else
             {
-                String[] answers = s.split(",");
-                Set<String>os = new HashSet<>();
-                for (int j=0;j<answers.length;j++)
-                    os.add(answers[j]);
-                for (int j=0;j<curans.size();j++)
-                    if (curans.get(j).isCorrect() && os.contains(curans.get(j).getDescription()))
-                        score++;
+                if(s != null){
+                    String[] answers = s.split(",");
+                    Set<String> os = new HashSet<>();
+                    for (int j = 0; j < answers.length; j++)
+                        os.add(answers[j]);
+                    for (int j = 0; j < curans.size(); j++)
+                        if (curans.get(j).isCorrect()) {
+                            if (os.contains(curans.get(j).getDescription())) score++;
+                            maxScore++;
+                        }
+                } else {
+                    for (int j = 0; j < curans.size(); j++)
+                        if (curans.get(j).isCorrect()) {
+                            maxScore++;
+                        }
+                }
             }
         }
 
@@ -73,7 +84,7 @@ public class CheckAnswers extends HttpServlet {
                 throw new RuntimeException(e);
             }
             try {
-                hs.addHistoryEntry( 1 ,quiz_id,score,
+                hs.addHistoryEntry( ((User)request.getSession().getAttribute("currentUser")).getId() ,quiz_id,score,
                         (  java.sql.Date ) request.getSession().getAttribute("st_time"),end_time);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -83,7 +94,8 @@ public class CheckAnswers extends HttpServlet {
         }
 
 
-        request.setAttribute("FinalScore",score);
+        request.getSession().setAttribute("FinalScore",score);
+        request.getSession().setAttribute("MaxScore",maxScore);
         request.getRequestDispatcher("/ShowQuizJSPs/ResultsPage.jsp").forward(request,response);
     }
 }

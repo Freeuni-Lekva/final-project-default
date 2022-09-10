@@ -1,6 +1,7 @@
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="Quizs.*" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Users.User" %><%--
   Created by IntelliJ IDEA.
   User: Ilia
   Date: 9/1/2022
@@ -25,14 +26,18 @@
     %>
     <title><%=quiz.getTitle()%>
     </title>
-    <div class="topnav">
-        <a href="">Home</a>
-        <a href="#news">Profile</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-        <% if (request.getSession().getAttribute("CurrentUser") != null) {
-            out.println("<a class = \"logout\" href=\"\">Log Out</a>");
-        }%>
+       <div class="topnav">
+        <a href="../Homepage/Homepage.jsp">Home</a>
+        <% if (request.getSession().getAttribute("currentUser") == null) { %>
+        <a class="logout" href="../LoginJSPs/CreateAccount.jsp">Create Account</a>
+        <a class="logout" href="../LoginJSPs/LoginJSP.jsp">Log In</a>
+        <%}%>
+        <a href="../SearchJSPs/Search.jsp">Search</a>
+        <% if (request.getSession().getAttribute("currentUser") != null) { %>
+        <a href="../profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
+        <a href="../Homepage/Mails.jsp">Mails</a>
+        <a class="logout" href="../LogOutServlet">Log Out</a>
+        <%}%>
     </div>
     <style>
         .topnav {
@@ -67,11 +72,18 @@
 <div class="form">
     <h3>Question <%="#" + (curID + 1)%>
     </h3>
+    <div class="timer" onload="timer(10)">
+        <div>Section</div>
+        <div class="time">
+            <strong>Time left: <span id="time">Loading...</span></strong>
+        </div>
+    </div>
     <h5>Please Write Answers To This Question, Separate Them With Comma</h5>
     <h1><%=question.getDescription()%>
     </h1>
-    <form action="./MultiPageServlet" method="post">
+    <form action="./MultiPageServlet" name="timeOut"  id="timeOut" method="post">
         <% out.print("<input type=\"text\" name=\"question" + curID + "\"" + ">");%><br>
+        <input class="button1" type="hidden" id="timeLeft" name="timeLeft" value="">
         <input class="button1" type="submit" value="Next Question">
     </form>
 </div>
@@ -139,3 +151,23 @@
         }
     }
 </style>
+
+<script>
+    let time = <%= (int) request.getSession().getAttribute("timeLeft")%>;
+    setInterval(function() {
+        let seconds = time % 60;
+        let minutes = (time - seconds) / 60;
+        if (seconds.toString().length == 1) {
+            seconds = "0" + seconds;
+        }
+        if (minutes.toString().length == 1) {
+            minutes = "0" + minutes;
+        }
+        document.getElementById("time").innerHTML = minutes + ":" + seconds;
+        document.getElementById("timeLeft").setAttribute('value' , time);
+        time--;
+        if (time == 0) {
+            document.timeOut.submit();
+        }
+    }, 1000);
+</script>

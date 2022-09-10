@@ -16,13 +16,17 @@
         <%=visitedUser.getUsername()%>
     </title>
     <div class="topnav">
-        <a href="">Home</a>
-        <a href="#news">Profile</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-        <% if (request.getSession().getAttribute("currentUser") != null) {
-            out.println("<a class = \"logout\" href=\"\">Log Out</a>");
-        }%>
+        <a href="./Homepage/Homepage.jsp">Home</a>
+        <% if (request.getSession().getAttribute("currentUser") == null) { %>
+        <a class="logout" href="./LoginJSPs/CreateAccount.jsp">Create Account</a>
+        <a class="logout" href="./LoginJSPs/LoginJSP.jsp">Log In</a>
+        <%}%>
+        <a href="./SearchJSPs/Search.jsp">Search</a>
+        <% if (request.getSession().getAttribute("currentUser") != null) { %>
+        <a href="./profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
+        <a href="./Homepage/Mails.jsp">Mails</a>
+        <a class="logout" href="./LogOutServlet">Log Out</a>
+        <%}%>
     </div>
     <style>
         .topnav {
@@ -60,7 +64,7 @@
 <form action="ProfileJSPs/settings.jsp" method="get">
     <input type="submit" class="button1" value="Settings">
 </form>
-<% } else if (currUser != null) {%>
+<% } else if (currUser != null && !us.getFriends(currUser).stream().anyMatch(x -> x.getId() == visitedUser.getId())){%>
 <% String friendship = (String) request.getAttribute("friendship"); %>
 <% String friendBtnvalue = null; %>
 <% String url = null; %>
@@ -70,10 +74,10 @@
 } else if (friendship.equals("incoming")) {
     friendBtnvalue = "Accept-Friend-Request";
     url = "acceptfriendrequest";
-} else if (friendship.equals("outgoing")) {
+}/* else if (friendship.equals("outgoing")) {
     friendBtnvalue = "Friend-Request-Sent";
     url = "removefriendrequest";
-}%>
+}*/%>
 <form action=<%=url%> method="post">
     <input type="hidden" name="other-user" value=<%=visitedUser.getUsername()%>>
     <input type="submit" class="button1" value=<%=friendBtnvalue%>>
@@ -98,6 +102,7 @@
 <br>
     <input class="tabs" type="button" name="Showdiv1" value="Taken Quizzes" onclick="showDiv('1')"/>
     <input class="tabs" type="button" name="Showdiv3" value="Added Quizzes" onclick="showDiv('3')"/>
+    <input class="tabs" type="button" name="Showdiv2" value="Friends" onclick="showDiv('4')"/>
     <input class="tabs" type="button" name="Showdiv2" value="Achievements" onclick="showDiv('2')"/>
 
     <div id="div1">
@@ -111,6 +116,18 @@
                 ArrayList<Quiz> arr = (ArrayList<Quiz>) request.getAttribute("takenQuizzes");
                 for (Quiz quiz : arr) {
                     out.println("<tr><td>" + "<a href=\"ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + quiz.getCount() + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
+                }
+            %>
+        </table>
+    </div>
+    <div id=div4>
+        <table class="topscorers">
+            <tr>
+                <th>Username</th>
+            </tr>
+            <% List<User> friendList = us.getFriends(visitedUser);
+                for (User user : friendList) {
+                    out.println("<tr><td>" + "<a href=\"./profile?user=" + user.getUsername() + "\">" + user.getUsername() + "</a>" + "</td></tr>");
                 }
             %>
         </table>
@@ -151,6 +168,7 @@
             document.getElementById('div1').style.display = 'none';
             document.getElementById('div2').style.display = 'none';
             document.getElementById('div3').style.display = 'none';
+            document.getElementById('div4').style.display = 'none';
             document.getElementById('div' + num).style.display = 'block'
         }
     </script>
@@ -349,6 +367,9 @@
     }
 
     #div3 {
+        display: none;
+    }
+    #div4 {
         display: none;
     }
 </style>

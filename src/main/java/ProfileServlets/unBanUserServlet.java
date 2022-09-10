@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-@WebServlet(name = "banUserServlet", value = "/banUser")
-public class BanUserServlet extends HttpServlet {
+@WebServlet(name = "unBanUserServlet", value = "/unBanUser")
+public class unBanUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,11 +21,10 @@ public class BanUserServlet extends HttpServlet {
         if (user == null || !user.isAdmin()) {
             return;
         }
-        String username = req.getParameter("ban-user");
-        int days = Integer.parseInt(req.getParameter("time"));
+        String username = req.getParameter("unban-user");
         try {
             UserService ser = new UserService();
-            ser.banUser(username, days);
+            ser.unBanUser(username);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {

@@ -1,6 +1,7 @@
 <%@ page import="Quizs.Quiz" %>
 <%@ page import="Quizs.IQuizDao" %>
-<%@ page import="Quizs.QuizDao" %><%--
+<%@ page import="Quizs.QuizDao" %>
+<%@ page import="Users.User" %><%--
   Created by IntelliJ IDEA.
   User: gio
   Date: 8/7/2022
@@ -11,14 +12,18 @@
 <html>
 <head>
     <title>Add Questions To The Quiz</title>
-    <div class="topnav">
-        <a href="">Home</a>
-        <a href="#news">Profile</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-        <% if (request.getSession().getAttribute("CurrentUser") != null) {
-            out.println("<a class = \"logout\" href=\"\">Log Out</a>");
-        }%>
+       <div class="topnav">
+        <a href="../Homepage/Homepage.jsp">Home</a>
+        <% if (request.getSession().getAttribute("currentUser") == null) { %>
+        <a class="logout" href="../LoginJSPs/CreateAccount.jsp">Create Account</a>
+        <a class="logout" href="../LoginJSPs/LoginJSP.jsp">Log In</a>
+        <%}%>
+        <a href="../SearchJSPs/Search.jsp">Search</a>
+        <% if (request.getSession().getAttribute("currentUser") != null) { %>
+        <a href="../profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
+        <a href="../Homepage/Mails.jsp">Mails</a>
+        <a class="logout" href="../LogOutServlet">Log Out</a>
+        <%}%>
     </div>
     <style>
         .topnav {
@@ -52,9 +57,6 @@
 <body>
 <div class="d-flex flex-column justify-content-center w-100 h-100"></div>
 <div class="form">
-    <% IQuizDao quizDao = new QuizDao();
-        request.getSession().setAttribute("NewQuiz", quizDao.getQuiz(9));
-    %>
     <h1>Add Questions To The <%= ((Quiz) request.getSession().getAttribute("NewQuiz")).getTitle()%>
     </h1>
     <h3>Please Choose What Type Of Question You Want To Add:</h3>
@@ -76,8 +78,9 @@
         Fill Question
     </button>
     <br><br>
-    <form action="index.jsp" id="BackForm" method="get">
+    <form action="./ShowQuizJSPs/ShowQuiz.jsp" id="BackForm" method="get">
         <input type="submit" id="BackButt" name="finishButt" class="finishButt" value="Finish Adding Quiz">
+        <input type="hidden"  name="quiz_id" class="finishButt" value="<%=((Quiz) request.getSession().getAttribute("NewQuiz")).getId()%>">
     </form>
 </div>
 </body>

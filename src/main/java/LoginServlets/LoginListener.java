@@ -1,5 +1,6 @@
 package LoginServlets;
 
+import Achievement.Achievement;
 import Achievement.AchievementDAO;
 import History.HistoryDao;
 import History.HistoryService;

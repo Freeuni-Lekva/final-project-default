@@ -41,6 +41,7 @@ public class ShowQuizServlet extends HttpServlet {
 
             java.sql.Date st_time = new java.sql.Date(System.currentTimeMillis());
             request.getSession().setAttribute("st_time", st_time);
+            request.getSession().setAttribute("timeLeft", currentQuiz.getQuizTime() * 10);
 
             ArrayList<Question> curquests;
             try {

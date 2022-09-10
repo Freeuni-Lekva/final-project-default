@@ -23,11 +23,12 @@ public class AddQuestionResponseQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IQuestionDao questionDao = (IQuestionDao) request.getServletContext().getAttribute("QuestionDao");
         String question = request.getParameter("questionDescription");
+        Quiz newQuiz = (Quiz) request.getSession().getAttribute("NewQuiz");
         String answersText = request.getParameter("answer");
         String[] answers = answersText.split(",");
         List<String> trimmedAnswers = Arrays.stream(answers).map(String::trim).collect(Collectors.toList());
         try {
-            Question newQuest = questionDao.addQuestion(9 , "FILL_QUESTION" , question);
+            Question newQuest = questionDao.addQuestion(newQuiz.getId() , "QUESTION_RESPONSE" , question);
             trimmedAnswers.forEach(x -> {
                 try {
                     questionDao.addAnswer(newQuest , x , true);

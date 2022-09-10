@@ -29,7 +29,8 @@ public class MultiPageServlet extends HttpServlet {
             String s = request.getParameter("question" + curID);
             request.getSession().setAttribute("question" + curID, s);
         }
-
+        int timeLeft = (int) Integer.parseInt(request.getParameter("timeLeft"));
+        request.getSession().setAttribute("timeLeft" , timeLeft);
         IQuizDao quizDao = (IQuizDao) request.getServletContext().getAttribute("QuizDao");
         int quiz_id = Integer.parseInt((String) request.getSession().getAttribute("quiz_id"));
         Quiz currentQuiz;
@@ -42,7 +43,7 @@ public class MultiPageServlet extends HttpServlet {
             request.getRequestDispatcher("/ShowQuizJSPs/ImmediateFeedback.jsp").forward(request, response);
         } else {
             curID++;
-            if (curID == questions.size()) {
+            if (curID == questions.size() || timeLeft <= 2) {
                 request.getRequestDispatcher("CheckAnswers").forward(request, response);
             } else {
                 request.getSession().setAttribute("CurrentQuestion", curID);

@@ -32,5 +32,8 @@ public class MakeAdminServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        resp.sendRedirect("Homepage/Homepage.jsp");
+
     }
 }

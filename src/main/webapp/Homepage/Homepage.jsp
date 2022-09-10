@@ -87,11 +87,16 @@
         <% if (request.getSession().getAttribute("currentUser") == null) { %>
         <a class="logout" href="../LoginJSPs/CreateAccount.jsp">Create Account</a>
         <a class="logout" href="../LoginJSPs/LoginJSP.jsp">Log In</a>
+
         <%}%>
         <a href="../SearchJSPs/Search.jsp">Search</a>
         <% if (request.getSession().getAttribute("currentUser") != null) { %>
         <a href="../profile?user=<%=user.getUsername()%>">Profile</a>
         <a href="Mails.jsp">Mails</a>
+        <a href="../AddQuizJSPs/QuizCreation.jsp">Create Quiz</a>
+        <% if(((User)request.getSession().getAttribute("currentUser")).isAdmin()){ %>
+        <a href="../ProfileJSPs/admin.jsp">Admin Panel</a>
+        <%}%>
         <a class="logout" href="../LogOutServlet">Log Out</a>
         <%}%>
     </div>
@@ -217,6 +222,7 @@
             </tr>
             <%
                 for (User friendsTaken : friendRecentQuizzesTaken.keySet()) {
+                    //System.out.println(friendsTaken.getUsername());
                     out.println("<tr><td>" + friendsTaken.getUsername() + "</td><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + friendRecentQuizzesTaken.get(friendsTaken).getId() + "\">" + friendRecentQuizzesTaken.get(friendsTaken).getTitle() + "</a>" + "</td></tr>");
                 }%>
         </table>
@@ -230,7 +236,8 @@
             </tr>
             <%
                 for (User friendsTaken : friendRecentQuizCreatingActivities.keySet()) {
-                    out.println("<tr><td>" + friendsTaken.getUsername() + "</td><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + friendRecentQuizzesTaken.get(friendsTaken).getId() + "\">" + friendRecentQuizzesTaken.get(friendsTaken).getTitle() + "</a>" + "</td></tr>");
+                    System.out.println(friendsTaken.getUsername());
+                    out.println("<tr><td>" + friendsTaken.getUsername() + "</td><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + friendRecentQuizCreatingActivities.get(friendsTaken).getId() + "\">" + friendRecentQuizCreatingActivities.get(friendsTaken).getTitle() + "</a>" + "</td></tr>");
                 }%>
         </table>
     </div>

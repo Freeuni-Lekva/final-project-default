@@ -15,14 +15,18 @@
 <html>
 <head>
     <title>Quiz Result Page</title>
-    <div class="topnav">
-        <a href="">Home</a>
-        <a href="#news">Profile</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-        <% if (request.getSession().getAttribute("CurrentUser") != null) {
-            out.println("<a class = \"logout\" href=\"\">Log Out</a>");
-        }%>
+       <div class="topnav">
+        <a href="./Homepage/Homepage.jsp">Home</a>
+        <% if (request.getSession().getAttribute("currentUser") == null) { %>
+        <a class="logout" href="./LoginJSPs/CreateAccount.jsp">Create Account</a>
+        <a class="logout" href="./LoginJSPs/LoginJSP.jsp">Log In</a>
+        <%}%>
+        <a href="./SearchJSPs/Search.jsp">Search</a>
+        <% if (request.getSession().getAttribute("currentUser") != null) { %>
+        <a href="./profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
+        <a href="./Homepage/Mails.jsp">Mails</a>
+        <a class="logout" href="./LogOutServlet">Log Out</a>
+        <%}%>
     </div>
     <style>
         .topnav {
@@ -57,10 +61,11 @@
 <div class="form">
     <%
         User user = (User) request.getSession().getAttribute("currentUser");
-        Integer score = (Integer) request.getAttribute("FinalScore");
+        Integer score = (Integer) request.getSession().getAttribute("FinalScore");
         java.sql.Date st_time = (Date) request.getSession().getAttribute("st_time");
         java.sql.Date end_time = (Date) request.getSession().getAttribute("end_time");
         Integer quizID = Integer.parseInt((String) request.getSession().getAttribute("quiz_id"));
+        Integer maxScore = (Integer) request.getSession().getAttribute("MaxScore");
         IQuizDao quizDao;
         try {
             quizDao = new QuizDao();
@@ -84,7 +89,7 @@
             throw new RuntimeException(e);
         }
     %>
-    <h1>User <%=user.getUsername()%> got <%=score%> points in this quiz!</h1>
+    <h1>User <%=user.getUsername()%> got <%=score%> out of <%=maxScore%> points in this quiz!</h1>
     <h2>Start Time : <%=st_time%> </br> End Time: <%=end_time%>
     </h2>
     <%
@@ -108,7 +113,12 @@
                 out.println("<h3>Your Answer: " + s + "</h3>");
                 out.println("<h3>Correct Answer: " + correctAns + "</h3>");
             } else {
-                String[] ansS = s.split(",");
+                String[] ansS = new String[1];
+                if(s != null){
+                    ansS = s.split(",");
+                } else {
+                    ansS[0] = "";
+                }
                 String temp = "";
                 for (int k = 0; k < ansS.length; k++)
                     temp += ansS[k] + " ";
