@@ -7,12 +7,12 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="AddQuizJSPs/QuizCreation.jsp">Create Quiz</a>
+<%--<a href="AddQuizJSPs/QuizCreation.jsp">Create Quiz</a>
 <a href="AddQuizJSPs/AddQuestions.jsp">Add Questions</a>
 <a href="SearchJSPs/Search.jsp">Search</a>
-<a href="ShowQuizJSPs/ShowQuiz.jsp?quiz_id=10">dsdssdd</a>
+<a href="ShowQuizJSPs/ShowQuiz.jsp?quiz_id=10">dsdssdd</a>--%>
 <a href="Homepage/Homepage.jsp">Homepage</a>
-<form method="POST" action="ShowQuizJSPs/ShowQuiz.jsp">
+<%--<form method="POST" action="ShowQuizJSPs/ShowQuiz.jsp">
     <input type="hidden" id="quiz_id" name="quiz_id" value="10">
     <input type="submit">
 </form>
@@ -35,7 +35,7 @@
 
 <a href="LoginJSPs/CreateAccount.jsp">Create Account</a>
 <a href="AddQuestionResponseQuestion.jsp"> Add</a>
-<a href="QuizCreation.jsp"> Add</a>
+<a href="QuizCreation.jsp"> Add</a>--%>
 
 </body>
 </html>

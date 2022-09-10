@@ -21,4 +21,6 @@ public interface IUserDao {
     List<User> getSentRequests(User user) throws SQLException;
     List<User> getReceivedRequests(User user) throws SQLException;
     boolean banUser(String username, Date ban_expiration) throws SQLException;
+    Date getBanExpiration(String username) throws SQLException;
+    boolean unBanUser(String username) throws SQLException;
 }

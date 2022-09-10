@@ -1,6 +1,5 @@
 package ProfileServlets;
 
-import Mails.FriendRequest;
 import Mails.Mail;
 import Mails.MailService;
 import Users.User;
@@ -26,7 +25,9 @@ public class SendFriendRequestServlet extends HttpServlet {
         User currentUser = (User) req.getSession().getAttribute("currentUser");
         User otherUser;
         try {
-            otherUser = new UserService().getUser(req.getParameter("other-user"));
+            UserService us = new UserService();
+            otherUser = us.getUser(req.getParameter("other-user"));
+            us.addFriend(currentUser , otherUser);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {

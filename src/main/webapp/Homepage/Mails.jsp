@@ -1,30 +1,44 @@
+<%@ page import="Mails.MailService" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="Quizs.Quiz" %>
-<%@ page import="Users.UserService" %>
-<%@ page import="Users.User" %><%--
+<%@ page import="Mails.Mail" %>
+<%@ page import="Users.User" %>
+<%@ page import="Users.UserService" %><%--
   Created by IntelliJ IDEA.
   User: nikag
-  Date: 9/7/2022
-  Time: 12:43 AM
+  Date: 9/9/2022
+  Time: 11:06 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Search</title>
+
+    <% ArrayList<Mail> mails = null;
+        UserService us = (UserService) application.getAttribute("UserService");
+
+        try {
+            MailService mailService = new MailService();
+            mails = (ArrayList<Mail>) mailService.getUsersIncomingMails(((User) request.getSession().getAttribute("currentUser")).getId());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } %>
+
+    <title>Mails</title>
     <div class="topnav">
-    <a href="./Homepage/Homepage.jsp">Home</a>
-    <% if (request.getSession().getAttribute("currentUser") == null) { %>
-    <a class="logout" href="./LoginJSPs/CreateAccount.jsp">Create Account</a>
-    <a class="logout" href="./LoginJSPs/LoginJSP.jsp">Log In</a>
-    <%}%>
-    <a href="./SearchJSPs/Search.jsp">Search</a>
-    <% if (request.getSession().getAttribute("currentUser") != null) { %>
-    <a href="./profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
-    <a href="./Homepage/Mails.jsp">Mails</a>
-    <a class="logout" href="./LogOutServlet">Log Out</a>
-    <%}%>
-</div>
+        <a href="./Homepage.jsp">Home</a>
+        <% if (request.getSession().getAttribute("currentUser") == null) { %>
+        <a class="logout" href="../LoginJSPs/CreateAccount.jsp">Create Account</a>
+        <a class="logout" href="../LoginJSPs/LoginJSP.jsp">Log In</a>
+        <%}%>
+        <a href="../SearchJSPs/Search.jsp">Search</a>
+        <% if (request.getSession().getAttribute("currentUser") != null) { %>
+        <a href="../profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
+        <a class="logout" href="../LogOutServlet">Log Out</a>
+        <%}%>
+    </div>
     <style>
         .topnav {
             font-family: Arial, Helvetica, sans-serif;
@@ -53,22 +67,29 @@
         }
 
     </style>
-        <% ArrayList<Quiz> quizzes = (ArrayList<Quiz>) request.getAttribute("quizzes");
-                UserService us = (UserService) application.getAttribute("UserService");
-        %>
 </head>
 <body>
 <div class="d-flex flex-column justify-content-center w-100 h-100"></div>
 <div class="form">
-    <h1>Search Results: </h1>
+    <h1>Your Mails</h1>
     <table class="topscorers">
         <tr>
-            <th>Quiz Title</th>
-            <th>Creator</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>From</th>
+            <th>Date</th>
         </tr>
         <%
-            for (Quiz quiz : quizzes) {
-                out.println("<tr><td>" + "<a href=\"./ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
+            for (Mail mail : mails) {
+                if (mail.getType() == "NOTE") {
+                    out.println("<tr><td>" + mail.getTitle() + "</td><td>" + mail.getContent() + "</td><td>" + us.getUser(mail.getFromId()).getUsername() + "</td><td>" + mail.getDate().toString() + "</td></tr>");
+                }
+                if (mail.getType() == "CH") {
+                    out.println("<tr><td>" + "You Have Been Challenged" + "</td><td>" + "<a href=\"../ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + mail.getContent() + "\">" + mail.getTitle() + "</a>" + "</td><td>" + us.getUser(mail.getFromId()).getUsername() + "</td><td>" + mail.getDate().toString() + "</td></tr>");
+                }
+                if (mail.getType() == "FRT") {
+                    out.println("<tr><td>" + mail.getTitle() + "</td><td>" + "<a href=\"../profile?user=" + us.getUser(mail.getFromId()).getUsername() + "\">" + "Click Here To Accept" + "</a>" + "</td><td>" + us.getUser(mail.getFromId()).getUsername() + "</td><td>" + mail.getDate().toString() + "</td></tr>");
+                }
             }
         %>
     </table>

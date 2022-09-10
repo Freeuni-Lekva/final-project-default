@@ -1,5 +1,6 @@
 package Users;
 
+import javax.print.attribute.standard.PresentationDirection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -161,6 +162,27 @@ public class UserDao implements IUserDao {
         int id = this.getUser(username).getId();
         PreparedStatement stm = conn.prepareStatement("update users set is_banned = true, ban_expiration = ? where id = ?");
         stm.setDate(1, ban_expiration);
+        stm.setInt(2, id);
+        int changed = stm.executeUpdate();
+        return changed > 0;
+    }
+
+    @Override
+    public Date getBanExpiration(String username) throws SQLException {
+        int id = this.getUser(username).getId();
+        PreparedStatement stm = conn.prepareStatement("select * from users where id = ?");
+        stm.setInt(1, id);
+        ResultSet res = stm.executeQuery();
+        res.next();
+        Date exprDate = res.getDate(6);
+        return exprDate;
+    }
+
+    @Override
+    public boolean unBanUser(String username) throws SQLException {
+        int id = this.getUser(username).getId();
+        PreparedStatement stm = conn.prepareStatement("update users set is_banned = false, ban_expiration = ? where id = ?");
+        stm.setDate(1, null);
         stm.setInt(2, id);
         int changed = stm.executeUpdate();
         return changed > 0;

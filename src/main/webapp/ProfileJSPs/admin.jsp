@@ -11,13 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="/quizWebsite_war_exploded/deactivateUser" method="post">
-        <label for="deactivate">Deactivate user account:</label><br>
-        <input type="text" id="deactivate" name="deactivate-user"><br><br>
-        <input type="submit" value="Deactivate">
-    </form>
     <br>
-    <form action="/quizWebsite_war_exploded/banUser" method="post">
+    <form action="../banUser" method="post">
         <label for="ban">Ban user account:</label><br>
         <input type="text" id="ban" name="ban-user"><br><br>
         <label for="time">Time in days</label><br>
@@ -25,7 +20,12 @@
         <input type="submit" value="Ban">
     </form>
     <br>
-    <form action="/quizWebsite_war_exploded/makeAdmin" method="post">
+    <form action="../unBanUser" method="post">
+        <label for="ban">UnBan user account:</label><br>
+        <input type="text" id="unban" name="unban-user"><br><br>
+        <input type="submit" value="UnBan">
+    </form>
+    <form action="../makeAdmin" method="post">
         <label for="new-admin">Make user admin:</label><br>
         <input type="text" id="new-admin" name="new-admin"><br><br>
         <input type="submit" value="Make Admin">

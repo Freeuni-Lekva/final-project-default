@@ -20,8 +20,10 @@ public class AddMultipleAnswerQuestionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IQuestionDao questionDao = (IQuestionDao) request.getServletContext().getAttribute("QuestionDao");
         String question = request.getParameter("questionDescription");
+        Quiz newQuiz = (Quiz) request.getSession().getAttribute("NewQuiz");
+
         try {
-            Question newQuest = questionDao.addQuestion( 9, "MULTIPLE_CHOICE" , question);
+            Question newQuest = questionDao.addQuestion( newQuiz.getId(), "MULTIPLE_CHOICE" , question);
             for(int index = 1 ; index < 5 ; index++){
                 String answer = request.getParameter("answer" + index);
                 boolean correct = request.getParameter("correctAnswer").equals("" + index);

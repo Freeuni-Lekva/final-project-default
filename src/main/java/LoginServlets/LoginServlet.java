@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 @WebServlet(name = "LoginServlet", value = "/LoginServlet")
@@ -23,7 +24,16 @@ public class LoginServlet extends HttpServlet {
 
         try {
             if(us.login(username, password)){
+
                 User user = us.getUser(username);
+
+                Date banExp = us.getBanExpiration(user);
+                if(banExp != null && !banExp.before(new java.util.Date())) {
+                    request.getRequestDispatcher("./LoginJSPs/LoginDenied.jsp").forward(request, response);
+                    return;
+                } else if(banExp != null && banExp.before(new java.util.Date())) {
+                    us.unBanUser(username);
+                }
                 request.getSession().setAttribute("currentUser", user);
                 response.sendRedirect("./Homepage/Homepage.jsp");
             }else{

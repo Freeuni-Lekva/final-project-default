@@ -21,13 +21,9 @@ public class AddPictureResponseQuestionServlet extends HttpServlet {
         IQuestionDao questionDao = (IQuestionDao) request.getServletContext().getAttribute("QuestionDao");
         String question = request.getParameter("questionDescription");
         question = question + " " + request.getParameter("imgQuestion");
+        Quiz newQuiz = (Quiz) request.getSession().getAttribute("NewQuiz");
         try {
-            questionDao.addQuestion(4 , "PICTURE_RESPONSE" , "tempo");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            Question newQuest = questionDao.addQuestion(9 , "PICTURE_RESPONSE" , question);
+            Question newQuest = questionDao.addQuestion(newQuiz.getId() , "PICTURE_RESPONSE" , question);
             String answer = request.getParameter("answer");
             questionDao.addAnswer(newQuest , answer , true);
         } catch (SQLException e) {

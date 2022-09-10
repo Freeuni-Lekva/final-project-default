@@ -1,30 +1,34 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="Quizs.Quiz" %>
+<%@ page import="Users.User" %>
+<%@ page import="java.util.List" %>
 <%@ page import="Users.UserService" %>
-<%@ page import="Users.User" %><%--
+<%@ page import="java.sql.SQLException" %><%--
   Created by IntelliJ IDEA.
   User: nikag
-  Date: 9/7/2022
-  Time: 12:43 AM
+  Date: 9/10/2022
+  Time: 7:49 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Search</title>
+    <title>Share Quiz</title>
+    <% User currUser = (User) request.getSession().getAttribute("currentUser"); %>
+    <% UserService us = (UserService) request.getServletContext().getAttribute("UserService");%>
+    <% request.getSession().setAttribute("sharedQuiz" , request.getParameter("sharedQuiz"));%>
+
     <div class="topnav">
-    <a href="./Homepage/Homepage.jsp">Home</a>
-    <% if (request.getSession().getAttribute("currentUser") == null) { %>
-    <a class="logout" href="./LoginJSPs/CreateAccount.jsp">Create Account</a>
-    <a class="logout" href="./LoginJSPs/LoginJSP.jsp">Log In</a>
-    <%}%>
-    <a href="./SearchJSPs/Search.jsp">Search</a>
-    <% if (request.getSession().getAttribute("currentUser") != null) { %>
-    <a href="./profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
-    <a href="./Homepage/Mails.jsp">Mails</a>
-    <a class="logout" href="./LogOutServlet">Log Out</a>
-    <%}%>
-</div>
+        <a href="./Homepage/Homepage.jsp">Home</a>
+        <% if (request.getSession().getAttribute("currentUser") == null) { %>
+        <a class="logout" href="./LoginJSPs/CreateAccount.jsp">Create Account</a>
+        <a class="logout" href="./LoginJSPs/LoginJSP.jsp">Log In</a>
+        <%}%>
+        <a href="./SearchJSPs/Search.jsp">Search</a>
+        <% if (request.getSession().getAttribute("currentUser") != null) { %>
+        <a href="./profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
+        <a href="./Homepage/Mails.jsp">Mails</a>
+        <a class="logout" href="./LogOutServlet">Log Out</a>
+        <%}%>
+    </div>
     <style>
         .topnav {
             font-family: Arial, Helvetica, sans-serif;
@@ -53,22 +57,23 @@
         }
 
     </style>
-        <% ArrayList<Quiz> quizzes = (ArrayList<Quiz>) request.getAttribute("quizzes");
-                UserService us = (UserService) application.getAttribute("UserService");
-        %>
 </head>
 <body>
-<div class="d-flex flex-column justify-content-center w-100 h-100"></div>
 <div class="form">
-    <h1>Search Results: </h1>
+    <h1>Share Quiz</h1>
     <table class="topscorers">
         <tr>
-            <th>Quiz Title</th>
-            <th>Creator</th>
+            <th>Username</th>
         </tr>
-        <%
-            for (Quiz quiz : quizzes) {
-                out.println("<tr><td>" + "<a href=\"./ShowQuizJSPs/ShowQuiz.jsp?quiz_id=" + quiz.getId() + "\">" + quiz.getTitle() + "</a>" + "</td><td>" + us.getUser(quiz.getCreatorId()).getUsername() + "</td></tr>");
+        <% List<User> friendList = null;
+            try {
+                friendList = us.getFriends(currUser);
+                System.out.println(friendList.size());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            for (User user : friendList) {
+                out.println("<tr><td>" + "<a href=\"../ShareQuizServlet?id=" + user.getId() + "\">" + user.getUsername() + "</a>" + "</td></tr>");
             }
         %>
     </table>

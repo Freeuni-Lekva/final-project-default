@@ -84,13 +84,17 @@
     <title><%=q.getTitle()%>
     </title>
     <div class="topnav">
-        <a href="">Home</a>
-        <a href="#news">Profile</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-        <% if (request.getSession().getAttribute("CurrentUser") != null) {
-            out.println("<a class = \"logout\" href=\"\">Log Out</a>");
-        }%>
+        <a href="../Homepage/Homepage.jsp">Home</a>
+        <% if (request.getSession().getAttribute("currentUser") == null) { %>
+        <a class="logout" href="../LoginJSPs/CreateAccount.jsp">Create Account</a>
+        <a class="logout" href="../LoginJSPs/LoginJSP.jsp">Log In</a>
+        <%}%>
+        <a href="../SearchJSPs/Search.jsp">Search</a>
+        <% if (request.getSession().getAttribute("currentUser") != null) { %>
+        <a href="../profile?user=<%=((User)request.getSession().getAttribute("currentUser")).getUsername()%>">Profile</a>
+        <a href="../Homepage/Mails.jsp">Mails</a>
+        <a class="logout" href="../LogOutServlet">Log Out</a>
+        <%}%>
     </div>
     <style>
         .topnav {
@@ -124,8 +128,17 @@
 <body>
 <div class="d-flex flex-column justify-content-center w-100 h-100"></div>
 <div class="form">
+    <%if(request.getSession().getAttribute("currentUser") != null && (((User)request.getSession().getAttribute("currentUser")).isAdmin() || ((User)request.getSession().getAttribute("currentUser")).getId() == q.getCreatorId())){ %>
+    <form action="../DeleteQuizServlet" method="post">
+        <input type="submit" value="Delete Quiz" class="button2">
+    </form>
+    <%}%>
+    <form action="./ShareQuiz.jsp" method="post">
+        <input type="submit" value="Challenge Friend" class="button2">
+        <input type="hidden" name="sharedQuiz" value="<%= q.getId() %>">
+    </form>
     <form action="../ShowQuizServlet" id="showQuizForm" method="post">
-        <h1><%=q.getTitle()%>
+        <h1><%=q.getTitle()%><br>
         </h1>
         <div class="w3-tag w3-small w3-round w3-blue" style="padding:3px">
             <% if (q.isCanBePracticed()) {%>
@@ -187,7 +200,7 @@
                             String username = usv.getUser(cur.getUser_id()).getUsername();
                             int score = cur.getScore();
                             String date = cur.getEnd_date().toString();
-                            out.println("<tr><td>FIRSTTABLE" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
+                            out.println("<tr><td>" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
@@ -210,7 +223,7 @@
                             String username = usv.getUser(cur.getUser_id()).getUsername();
                             int score = cur.getScore();
                             String date = cur.getEnd_date().toString();
-                            out.println("<tr><td>SECONDTABLE" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
+                            out.println("<tr><td>" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -234,7 +247,7 @@
                             String username = usv.getUser(cur.getUser_id()).getUsername();
                             int score = cur.getScore();
                             String date = cur.getEnd_date().toString();
-                            out.println("<tr><td>THIRDTABLE" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
+                            out.println("<tr><td>" + username + "</td><td>" + score + "</td><td>" + date + "</td></tr>");
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -299,6 +312,23 @@
 
     .button1:hover {
         box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    }
+    .button2 {
+        background-color: darkred; /* Green */
+        border: none;
+        color: white;
+        padding: 7px 16px;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 10px;
+        display: inline-block;
+        font-size: 12px;
+        border-radius: 8px;
+        transition-duration: 0.4s;
+    }
+
+    .button2:hover {
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.24), 0 9px 25px 0 rgba(0, 0, 0, 0.19);
     }
 
     .tabs {
