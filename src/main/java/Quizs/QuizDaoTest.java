@@ -132,7 +132,10 @@ public class QuizDaoTest extends TestCase {
 
         ud.addUser("zaxarichi", "amas ramdeniaq gavlili");
         qd.addQuiz("title", "description", 1, 200, true, false, false, true);
+        qd.addQuiz("jingle", "description", 1, 200, true, false, false, true);
         ArrayList<Quiz> quizzesByTitle = qd.getQuizzesByTitle("title");
+        assertEquals(2, qd.getQuizzes("i").size());
+        assertEquals(1, qd.getQuizzes("jin").size());
         assertEquals(1, quizzesByTitle.size());
         for(int i = 0; i < 15; i++){
             qdd.addQuestion(1, "FILL_QUESTION", "desc");
